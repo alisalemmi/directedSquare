@@ -1,6 +1,9 @@
 {
   "extends": ["airbnb", "prettier"],
   "plugins": ["prettier"],
+  "env": {
+    "browser": true
+  },
   "rules": {
     "prettier/prettier": [
       "warn",
@@ -12,6 +15,7 @@
       }
     ],
     "spaced-comment": "off",
+    "import/prefer-default-export": "off",
     "no-console": "warn",
     "consistent-return": "off",
     "func-names": "off",
@@ -19,10 +23,20 @@
     "no-process-exit": "off",
     "no-param-reassign": "off",
     "no-return-await": "off",
+    "no-else-return": "off",
+    "no-useless-return": "off",
     "no-underscore-dangle": "off",
     "no-var": "warn",
     "new-cap": "off",
+    "no-plusplus": "off",
+    "radix": "off",
     "class-methods-use-this": "off",
+    "no-restricted-syntax": [
+      "warn",
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement"
+    ],
     "prefer-destructuring": [
       "error",
       {
@@ -35,6 +49,7 @@
       {
         "argsIgnorePattern": "req|res|next|val"
       }
-    ]
+    ],
+    "no-undef": "warn"
   }
 }
