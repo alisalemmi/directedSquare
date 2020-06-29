@@ -1,0 +1,19 @@
+.puzzle {
+  display: grid;
+  grid-template-columns: repeat($puzzle-column, $puzzle-item-width);
+  gap: 1rem;
+
+  @include card(center);
+}
+
+.item {
+  width: 100%;
+
+  transition: all 0.3s ease;
+
+  @include no-drag;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

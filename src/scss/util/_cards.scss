@@ -1,0 +1,23 @@
+@mixin card($type) {
+  padding: $card-padding;
+  background-color: #fff;
+
+  @if $type == left {
+    border-radius: 0 $card-padding $card-padding 0;
+  }
+  @if $type == center {
+    border-radius: $card-padding;
+  }
+  @if $type == right {
+    border-radius: $card-padding 0 0 $card-padding;
+  }
+}
+
+%card_side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: $puzzle-item-width + 2 * $card-padding;
+  
+  background: #000;
+}

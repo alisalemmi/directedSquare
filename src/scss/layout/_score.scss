@@ -1,0 +1,33 @@
+.score {
+  @include card(right);
+  @extend %card_side;
+}
+
+.correct,
+.wrong {
+  text-align: center;
+
+  &__number {
+    display: block;
+    margin-bottom: -$font-score / 4;
+
+    font-size: $font-score;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: $font-score / 2;
+  }
+}
+
+.wrong{
+  margin-top: $font-score / 3;
+}
+
+.correct__number {
+  color: $color-correct;
+}
+
+.wrong__number {
+  color: $color-wrong;
+}

@@ -1,0 +1,11 @@
+.samples {
+  @extend %card_side;
+
+  @include card(left);
+}
+
+.sample {
+  width: 100%;
+  margin: 1rem 0;
+  @include no-drag;
+}
