@@ -4,7 +4,15 @@ const DOM = {
   samples: document.querySelector('.samples'),
   items: null,
   correct: document.querySelector('.correct__number'),
-  wrong: document.querySelector('.wrong__number')
+  wrong: document.querySelector('.wrong__number'),
+  popup: document.getElementById('popup'),
+  popupText: document.querySelector('.popup'),
+  backdrop: document.querySelector('.popup__backdrop')
+};
+
+export const reset = () => {
+  DOM.correct.innerHTML = '0';
+  DOM.wrong.innerHTML = '0';
 };
 
 /**
@@ -12,6 +20,7 @@ const DOM = {
  * @param {Number[]} samples
  */
 export const addSample = samples => {
+  DOM.samples.innerHTML = '';
   for (const i of samples)
     DOM.samples.innerHTML += `<div><img src="./img/${i}.png" alt="Sample${i}" class="sample"/></div>`;
 };
@@ -21,6 +30,8 @@ export const addSample = samples => {
  * @param {Number[]} items
  */
 export const addItem = items => {
+  DOM.puzzle.innerHTML = '';
+
   let i = 0;
   for (const item of items)
     DOM.puzzle.innerHTML += `<div><img src="./img/${
@@ -59,4 +70,17 @@ export const update = (target, result) => {
     audio = new Audio('./audio/wrong.wav');
   }
   audio.play();
+};
+
+/**
+ * close popup on click on backdrop
+ */
+export const backdropClick = isAllowed => {
+  DOM.backdrop.addEventListener('click', function (e) {
+    if (isAllowed() && e.target === this) DOM.popup.checked = false;
+  });
+};
+
+const createPopup = text => {
+  DOM.popupText.innerHTML = text;
 };

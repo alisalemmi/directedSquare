@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>speed select</title>
+    <title>مربع های جهت دار</title>
     <link rel="stylesheet" href="./css/main.css" />
+    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon" />
   </head>
   <body>
     <div class="container">
-      <div class="samples"></div>
-      <div class="puzzle"></div>
       <div class="score">
         <div class="timer">
           <svg
@@ -50,6 +49,33 @@
           <h3>نادرست</h3>
         </div>
       </div>
+      <div class="puzzle"></div>
+      <div class="samples"></div>
+    </div>
+    <label for="popup" style="color: white;">راهنما</label>
+
+    <input type="checkbox" name="poup" id="popup" />
+    <div class="popup__backdrop">
+      <div class="popup">
+        <div class="popup__top">
+          <div class="popup__icon"></div>
+          <h2 class="popup__title">مربع های جهت دار</h2>
+          <label for="popup">x</label>
+        </div>
+        <p class="popup__text">
+          این بازی به افزایش <b>توجه انتخابی</b> شما کمک می‌کند. افزایش
+          <b>توجه انتخابی</b> به شما کمک می‌کند تا زودتر از بین اشیاء مختلف و
+          شبیه به هم، مواردی که خصوصیات مد نظر شما را دارند، پیدا کنید.
+        </p>
+        <div class="popup__bottom">
+          <button class="popup__play">شروع</button>
+          <button class="popup__how">بازی چطوریه</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="popup-logo">
+      <img class="logo" src="./img/logo2.png" alt="موسسه هدایت فراگیر استعداد های برتر">
     </div>
   </body>
 </html>

@@ -8,6 +8,14 @@ const state = {
   }
 };
 
+export const reset = () => {
+  state.samples = [];
+  state.items = [];
+  state.total = 0;
+  state.score.correct = 0;
+  state.score.wrong = 0;
+};
+
 /**
  * select 3 different item randomly and return them
  */
@@ -37,18 +45,14 @@ export const selectItem = (n = 36) => {
 };
 
 /**
- * check that item whith this index is selected before
- * @param {Number} index index of item
- */
-export const isSelected = index => state.items[index].select;
-
-/**
  * select item with this index.
  * return [isCorrect, score].
  * second item in array is either number of correct or wrong.
  * @param {Number} index index of item
  */
 export const select = index => {
+  if (state.items[index].select) return;
+
   state.items[index].select = true;
 
   if (state.samples.includes(state.items[index].type)) {

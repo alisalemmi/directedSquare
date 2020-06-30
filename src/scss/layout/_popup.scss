@@ -1,0 +1,79 @@
+#popup {
+  display: none;
+
+  &:checked + .popup__backdrop {
+    visibility: visible;
+    backdrop-filter: blur(5px) brightness(60%);
+
+    & > .popup {
+      transform: translateY(0);
+    }
+  }
+}
+
+.popup {
+  @include card(popup);
+  padding: 1rem;
+  width: 50%;
+  
+  transform: translateY(-50vh);
+  transition: transform ease 0.2s;
+  
+  &__top {
+    display: flex;
+    align-items: center;
+    // width: 50rem;
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: center;
+ }
+
+  &__icon {
+    width: $popup-icon-size;
+    height: $popup-icon-size;
+    background: url('../img/logo.png') center center / contain;
+  }
+
+  &__title {
+    margin: 0 1rem 0 auto;
+
+    font-size: 2.5rem;
+    font-weight: 300;
+  }
+  
+  &__text {
+    color: #333;
+    font-size: 1.6rem;
+    font-weight: 100;
+  }
+
+  &__play {
+    @extend %button;
+    background-color: $color-correct;
+    margin-left: 2rem;
+  }
+  
+  &__how {
+    @extend %button;
+    background-color: $color-wrong;
+
+  }
+
+  &__backdrop {
+    visibility: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: all ease 0.2s;
+  }
+}

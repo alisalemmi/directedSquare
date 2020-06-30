@@ -2,10 +2,13 @@
 @import 'util/util';
 @import 'util/cards';
 @import 'util/typo';
+@import 'util/button';
+@import 'layout/logo';
 @import 'layout/puzzle';
 @import 'layout/sample';
 @import 'layout/score';
 @import 'layout/timer';
+@import 'layout/popup';
 
 * {
   box-sizing: border-box;
@@ -21,6 +24,7 @@ body {
   background: url('../img/background.png') top left/cover;
 
   font-family: 'vazir';
+  direction: rtl;
 }
 
 .container {
@@ -29,4 +33,5 @@ body {
   align-items: center;
   padding-top: 5rem;
 
+  visibility: hidden;
 }

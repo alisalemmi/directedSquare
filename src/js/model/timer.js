@@ -24,6 +24,8 @@ export const start = total => {
 
   document.dispatchEvent(tick);
 
+  if (timerInterval) stop();
+
   timerInterval = setInterval(() => {
     remain--;
 

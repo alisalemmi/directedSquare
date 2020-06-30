@@ -1,0 +1,51 @@
+.popup-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  backdrop-filter: blur(5px) brightness(40%);
+  transition: all ease 0.2s;
+
+  
+  animation: anim-backdrop 8s  ease both;
+}
+
+.logo {
+  display: block;
+  width: 90vh;
+  animation: anim-logo 6s 1s ease both;
+}
+
+@keyframes anim-logo {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes anim-backdrop {
+  from {
+    opacity: 0;
+  }
+
+  20%, 80%{
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
