@@ -1,6 +1,7 @@
 {
   "extends": ["airbnb", "prettier"],
   "plugins": ["prettier"],
+  "ignorePatterns": "bundle.js",
   "env": {
     "browser": true
   },

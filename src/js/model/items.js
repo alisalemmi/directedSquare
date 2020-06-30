@@ -59,16 +59,18 @@ export const select = index => {
 };
 
 /**
+ * calculate final score and return it.
+ */
+export const calcSocre = () =>
+  Math.floor(
+    ((state.score.correct - state.score.wrong / 3) / state.total) * 10000
+  ) / 100;
+
+/**
  * check that all of item is found.
  * return an array that first item is an array and second item is final score of game.
  */
 export const checkFinish = () => {
-  if (state.total === state.score.correct)
-    return [
-      true,
-      Math.floor(
-        ((state.score.correct - state.score.wrong / 3) / state.total) * 10000
-      ) / 100
-    ];
+  if (state.total === state.score.correct) return [true, calcSocre()];
   else return [false];
 };

@@ -1,5 +1,7 @@
 import * as UI from './view/UI';
 import * as Item from './model/items';
+import * as timerUI from './view/timer';
+import * as timer from './model/timer';
 
 const fillPage = () => {
   UI.addSample(Item.selectSample());
@@ -17,8 +19,24 @@ UI.setItemsClick(e => {
   UI.update(e.target, result);
 
   const finish = Item.checkFinish();
-  if (finish[0] === true) alert(finish[1]);
+  if (finish[0] === true) {
+    alert(finish[1]);
+    timer.stop();
+  }
   //TODO
-  // 1- instead of alert result page should shown
-  // 2- timer most stop
+  // instead of alert result page should shown
 });
+
+document.addEventListener('tick', e => {
+  timerUI.updateNumber(e.detail.label);
+  timerUI.setCircleDasharray(e.detail.circleDasharray);
+  timerUI.setRemainingPathColor(e.detail.remainingPathColor);
+});
+
+document.addEventListener('timeUp', () => {
+  //TODO
+  // instead of log result page should shown
+  console.log('finish', Item.calcSocre());
+});
+
+timer.start(20);
