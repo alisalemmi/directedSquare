@@ -4,7 +4,8 @@
 }
 
 .correct,
-.wrong {
+.wrong,
+.total {
   text-align: center;
 
   &__number {
@@ -20,8 +21,12 @@
   }
 }
 
-.correct{
+.correct {
   margin: $font-score / 3 0;
+}
+
+.total {
+  margin-top: $font-score / 3;
 }
 
 .correct__number {
@@ -30,4 +35,9 @@
 
 .wrong__number {
   color: $color-wrong;
+}
+
+.total__number {
+  direction: ltr;
+  color: $color-total;
 }

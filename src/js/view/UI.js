@@ -5,6 +5,7 @@ const DOM = {
   items: null,
   correct: document.querySelector('.correct__number'),
   wrong: document.querySelector('.wrong__number'),
+  total: document.querySelector('.total__number'),
   popup: document.getElementById('popup'),
   popupText: document.querySelector('.popup'),
   backdrop: document.querySelector('.popup__backdrop')
@@ -13,6 +14,7 @@ const DOM = {
 export const reset = () => {
   DOM.correct.innerHTML = '0';
   DOM.wrong.innerHTML = '0';
+  DOM.total.innerHTML = '0';
 };
 
 /**
@@ -69,6 +71,8 @@ export const update = (target, result) => {
     DOM.wrong.innerHTML = result[1];
     audio = new Audio('./audio/wrong.wav');
   }
+
+  DOM.total.innerHTML = result[2];
   audio.play();
 };
 

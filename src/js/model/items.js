@@ -46,7 +46,7 @@ export const selectItem = (n = 36) => {
 
 /**
  * select item with this index.
- * return [isCorrect, score].
+ * return [isCorrect, score, total score].
  * second item in array is either number of correct or wrong.
  * @param {Number} index index of item
  */
@@ -56,9 +56,9 @@ export const select = index => {
   state.items[index].select = true;
 
   if (state.samples.includes(state.items[index].type)) {
-    return [true, ++state.score.correct];
+    return [true, ++state.score.correct, calcSocre()];
   } else {
-    return [false, ++state.score.wrong];
+    return [false, ++state.score.wrong, calcSocre()];
   }
 };
 

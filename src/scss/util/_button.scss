@@ -1,4 +1,5 @@
-%button {
+.button {
+  position: relative;
   padding: 0.5rem 1.5rem;
   width: 10rem;
 
@@ -9,7 +10,29 @@
   font-family: inherit;
   outline: none;
 
+  overflow: hidden;
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+    transition: all 0.2s ease;
+    right: -50%;
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  &__label {
+    transition: all 0.2s ease;
+  }
+
   &:hover {
-    
+    .button__icon {
+      right: 50%;
+    }
+
+    .button__label {
+      transform: translateX(-10rem);
+    }
   }
 }

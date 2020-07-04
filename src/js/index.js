@@ -14,12 +14,15 @@ const clickHandler = e => {
   const index = parseInt(e.target.getAttribute('data-num'));
 
   const result = Item.select(index);
-  UI.update(e.target, result);
 
-  let score;
-  [finish, score] = Item.checkFinish();
+  if (result) UI.update(e.target, result);
+
+  finish = Item.checkFinish()[0];
   if (finish === true) {
-    alert(score);
+    document
+      .querySelectorAll('.popup__close')
+      .forEach(el => (el.style.visibility = 'hidden'));
+    showScore();
     timer.stop();
   }
   //TODO
@@ -33,6 +36,9 @@ UI.backdropClick(() => !finish);
 //-----------------------------
 const reset = () => {
   finish = false;
+  document
+    .querySelectorAll('.popup__close')
+    .forEach(el => (el.style.visibility = 'visible'));
 
   Item.reset();
   UI.reset();
@@ -43,6 +49,62 @@ const fillPage = () => {
   UI.addItem(Item.selectItem());
 
   UI.setItemsClick(clickHandler);
+  document.querySelector('.container').style.visibility = 'visible';
+};
+
+const check = () => {
+  document.querySelector('#popup').checked = true;
+};
+
+const showMenu = () => {
+  document
+    .querySelector('.popups')
+    .classList.remove('popup-score', 'popup-how');
+  document.querySelector('.popups').classList.add('popup-menu');
+
+  document.querySelector('#popup__score').classList.add('hide');
+  document.querySelector('#popup__menu').classList.remove('hide');
+  document.querySelector('#popup__how').classList.add('hide');
+
+  if (document.querySelector('#popup').checked === false)
+    setTimeout(check, 300);
+};
+
+const showScore = () => {
+  let score = Item.calcSocre();
+  let scores = localStorage.getItem('score')?.split(' ');
+  if (scores == null) scores = [];
+
+  scores.push(score);
+  localStorage.setItem('score', scores.join(' '));
+  document.querySelector('.popup__score__score').innerHTML =
+    score < 0 ? `${-score}-` : score;
+
+  document.querySelector('.popup__score__max').innerHTML = Math.max(...scores);
+
+  document.querySelector('.popups').classList.remove('popup-menu', 'popup-how');
+  document.querySelector('.popups').classList.add('popup-score');
+
+  document.querySelector('#popup__score').classList.remove('hide');
+  document.querySelector('#popup__menu').classList.add('hide');
+  document.querySelector('#popup__how').classList.add('hide');
+
+  if (document.querySelector('#popup').checked === false)
+    setTimeout(check, 300);
+};
+
+const showHow = () => {
+  document
+    .querySelector('.popups')
+    .classList.remove('popup-menu', 'popup-score');
+  document.querySelector('.popups').classList.add('popup-how');
+
+  document.querySelector('#popup__score').classList.add('hide');
+  document.querySelector('#popup__menu').classList.add('hide');
+  document.querySelector('#popup__how').classList.remove('hide');
+
+  if (document.querySelector('#popup').checked === false)
+    setTimeout(check, 300);
 };
 
 //-----------------------------
@@ -56,35 +118,45 @@ document.addEventListener('tick', e => {
 
 document.addEventListener('timeUp', () => {
   finish = true;
-  //TODO
-  // instead of log result page should shown
-  console.log('finish', Item.calcSocre());
+  document
+    .querySelectorAll('.popup__close')
+    .forEach(el => (el.style.visibility = 'hidden'));
+  showScore();
+
 });
 
-document.querySelector('.popup__play').addEventListener('click', () => {
-  reset();
-  fillPage();
-  document.querySelector('#popup').checked = false;
-  document.querySelector('.container').style.visibility = 'visible';
-  UI.createPopup(`<div class="popup__top">
-          <div class="popup__icon"></div>
-          <h2 class="popup__title">مربع های جهت دار</h2>
-          <label for="popup">x</label>
-        </div>
-        <p class="popup__text">
-          این بازی به افزایش <b>توجه انتخابی</b> شما کمک می‌کند. افزایش
-          <b>توجه انتخابی</b> به شما کمک می‌کند تا زودتر از بین اشیاء مختلف و
-          شبیه به هم، مواردی که خصوصیات مد نظر شما را دارند، پیدا کنید.
-        </p>
-        <div class="popup__bottom">
-          <button class="popup__play">شروع مجدد</button>
-          <button class="popup__how">بازی چطوریه</button>
-        </div>
-      </div>`);
+document.querySelectorAll('.popup__play').forEach(el =>
+  el.addEventListener('click', () => {
+    reset();
+    setTimeout(fillPage, 300);
+    document.querySelector('#popup').checked = false;
+    document
+      .querySelectorAll('.popup__play > .button__label')
+      .forEach(el => (el.innerHTML = 'شروع مجدد'));
+    document
+      .querySelectorAll('.popup__play > .button__icon')
+      .forEach(
+        el => (el.innerHTML = '<use xlink:href="./img/sprite.svg#refresh" />')
+      );
 
-  timer.start(5);
-});
+    timer.start(35);
+  })
+);
 
 setTimeout(() => {
   document.querySelector('#popup').checked = true;
-}, 8000);
+}, 7000);
+
+document.querySelectorAll('#popup__menu .popup__how').forEach(el =>
+  el.addEventListener('click', () => {
+    showHow();
+  })
+);
+
+document.querySelectorAll('#popup__how .popup__how').forEach(el =>
+  el.addEventListener('click', () => {
+    showMenu();
+  })
+);
+
+document.querySelector('.help').addEventListener('click', showMenu);
