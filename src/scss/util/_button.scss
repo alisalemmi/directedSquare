@@ -6,8 +6,11 @@
   cursor: pointer;
 
   color: #fff;
+  font: 400 1.3rem 'vazir';
+  text-align: center;
+
   border: none;
-  font-family: inherit;
+  border-radius: 2px;
   outline: none;
 
   overflow: hidden;
@@ -20,6 +23,13 @@
     right: -50%;
     height: 1.5rem;
     width: 1.5rem;
+
+    @media (hover: none) {
+      position: static;
+      transform: none;
+      margin-left: 1.5rem;
+      height: 17px;
+    }
   }
 
   &__label {
@@ -33,6 +43,17 @@
 
     .button__label {
       transform: translateX(-10rem);
+
+      @media (hover: none) {
+        transform: none;
+      }
     }
+  }
+
+  @media (hover: none) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14rem;
   }
 }

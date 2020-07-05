@@ -6,10 +6,10 @@ const DOM = {
   correct: document.querySelector('.correct__number'),
   wrong: document.querySelector('.wrong__number'),
   total: document.querySelector('.total__number'),
-  popup: document.getElementById('popup'),
-  popupText: document.querySelector('.popup'),
-  backdrop: document.querySelector('.popup__backdrop')
+  mute: document.querySelector('.mute')
 };
+
+let mute = false;
 
 export const reset = () => {
   DOM.correct.innerHTML = '0';
@@ -58,7 +58,7 @@ export const setItemsClick = func => {
  * 2- update score
  * 3- play audio
  * @param {Element} target
- * @param {[Boolean, Number]} result
+ * @param {[Boolean, Number, Number]} result
  */
 export const update = (target, result) => {
   target.style.opacity = 0.5;
@@ -73,18 +73,27 @@ export const update = (target, result) => {
   }
 
   DOM.total.innerHTML = result[2];
-  audio.play();
+  if (!mute) audio.play();
 };
 
 /**
- * close popup on click on backdrop
+ *
+ * @param {Number[]} solution
  */
-export const backdropClick = isAllowed => {
-  DOM.backdrop.addEventListener('click', function (e) {
-    if (isAllowed() && e.target === this) DOM.popup.checked = false;
+export const setSolution = solution => {
+  DOM.items.forEach((item, i) => {
+    item.classList.add(solution[i] ? 'item--correct' : 'item--wrong');
   });
 };
 
-const createPopup = text => {
-  DOM.popupText.innerHTML = text;
-};
+DOM.mute.addEventListener('click', () => {
+  if (mute) {
+    DOM.mute.innerHTML =
+      '<svg class="icon"><use xlink:href="./img/sprite.svg#speaker"/></svg>';
+    mute = false;
+  } else {
+    DOM.mute.innerHTML =
+      '<svg class="icon"><use xlink:href="./img/sprite.svg#speaker-1"/></svg>';
+    mute = true;
+  }
+});

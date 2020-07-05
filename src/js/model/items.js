@@ -5,7 +5,17 @@ const state = {
   score: {
     correct: 0,
     wrong: 0
-  }
+  },
+  finish: true
+};
+
+/**
+ * check that all items is found.
+ */
+export const isFinish = () => state.total === state.score.correct;
+
+export const setFinish = isFinish => {
+  state.finish = isFinish;
 };
 
 export const reset = () => {
@@ -14,6 +24,7 @@ export const reset = () => {
   state.total = 0;
   state.score.correct = 0;
   state.score.wrong = 0;
+  state.finish = false;
 };
 
 /**
@@ -51,30 +62,44 @@ export const selectItem = (n = 36) => {
  * @param {Number} index index of item
  */
 export const select = index => {
-  if (state.items[index].select) return;
+  if (state.finish || state.items[index].select) return;
 
   state.items[index].select = true;
 
   if (state.samples.includes(state.items[index].type)) {
-    return [true, ++state.score.correct, calcSocre()];
+    return [true, ++state.score.correct, getScore()];
   } else {
-    return [false, ++state.score.wrong, calcSocre()];
+    return [false, ++state.score.wrong, getScore()];
   }
+};
+
+const getScore = () =>
+  Math.floor(
+    ((state.score.correct - state.score.wrong / 3) / state.total) * 10000
+  ) / 100;
+
+const getMaxScore = score => {
+  let scores = localStorage.getItem('score')?.split(' ');
+  if (scores == null) scores = [];
+  scores.push(score);
+  localStorage.setItem('score', scores.join(' '));
+
+  return Math.max(...scores);
 };
 
 /**
  * calculate final score and return it.
  */
-export const calcSocre = () =>
-  Math.floor(
-    ((state.score.correct - state.score.wrong / 3) / state.total) * 10000
-  ) / 100;
+export const calcScore = () => {
+  const score = getScore();
 
-/**
- * check that all of item is found.
- * return an array that first item is an array and second item is final score of game.
- */
-export const checkFinish = () => {
-  if (state.total === state.score.correct) return [true, calcSocre()];
-  else return [false];
+  return {
+    score,
+    correct: state.score.correct,
+    wrong: state.score.wrong,
+    max: getMaxScore(score)
+  };
 };
+
+export const getSolution = () =>
+  state.items.map(val => state.samples.includes(val.type));

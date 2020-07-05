@@ -4,15 +4,24 @@
 
   @if $type == left {
     border-radius: 0 $card-padding $card-padding 0;
+    @include respond(phone) {
+      border-radius: $card-padding $card-padding 0 0;
+    }
   }
   @if $type == right {
     border-radius: $card-padding 0 0 $card-padding;
+    
+    @include respond(phone) {
+      border-radius: 0 0 $card-padding $card-padding;
+    }
   }
   @if $type == center {
     border-radius: $card-padding;
   }
   @if $type == popup {
     border-radius: $popup-border-radius;
+    padding: 2rem 3rem;
+    // padding: 0;
   }
 }
 
@@ -20,5 +29,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: $puzzle-item-width + 2 * $card-padding;
+  height: auto;
+
+  @include respond(phone) {
+    flex-direction: row;
+    width: auto;
+    // height: 5rem;
+  }
 }

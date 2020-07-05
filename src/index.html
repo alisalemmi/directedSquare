@@ -55,95 +55,232 @@
       </div>
       <div class="puzzle"></div>
       <div class="samples"></div>
+      <div class="help">
+        <svg class="icon">
+          <use xlink:href="./img/sprite.svg#lamp" />
+        </svg>
+      </div>
+      <div class="mute">
+        <svg class="icon">
+          <use xlink:href="./img/sprite.svg#speaker" />
+        </svg>
+      </div>
     </div>
-    <div class="help" style="color: white;">راهنما</div>
 
-    <input type="checkbox" name="poup" id="popup" />
+    <input type="checkbox" name="popup" id="check__menu" />
     <div class="popup__backdrop">
-      <div class="popups popup-menu">
-
-        <div class="popup hide" id="popup__score">
-          <div class="popup__top">
-            <div class="popup__icon"></div>
-            <h2 class="popup__title">مربع های جهت دار</h2>
-            <label class="popup__close" for="popup"></label>
-          </div>
-          <div class="popup__text">
-            <div>امتیاز شما: <span class="popup__score__score"></span></div>
-            <div>بیش ترین امتیاز: <span class="popup__score__max"></span></div>
-          </div>
-          <div class="popup__bottom">
-            <button class="button popup__play">
-              <svg class="button__icon">
-                <use xlink:href="./img/sprite.svg#play-button" />
-              </svg>
-              <div class="button__label">شروع</div>
-            </button>
-            <button class="button popup__how">
-              <svg class="button__icon">
-                <use xlink:href="./img/sprite.svg#question" />
-              </svg>
-              <div class="button__label">نمایش رتبه</div>
-            </button>
-          </div>
+      <div class="popup popup--main" id="popup__menu">
+        <div class="popup__top">
+          <div class="popup__logo"></div>
+          <h2 class="popup__title">مربع های جهت دار</h2>
+          <label class="popup__close" for="check__menu"></label>
+        </div>
+        <p class="popup__text">
+          این بازی به افزایش <b>توجه انتخابی</b> شما کمک می‌کند. افزایش
+          <b>توجه انتخابی</b> به شما کمک می‌کند تا زودتر از بین اشیاء مختلف و
+          شبیه به هم، مواردی که خصوصیات مد نظر شما را دارند، پیدا کنید. شبیه به
+          هم، مواردی که خصوصیات مد نظر شما را دارند، پیدا کنید. شبیه به هم،
+          مواردی که خصوصیات مد نظر شما را دارند، پیدا کنید. شبیه به هم، مواردی
+          که خصوصیات مد نظر شما را دارند، پیدا کنید.
+        </p>
+        <div class="popup__bottom">
+          <label class="button popup__play" for="check__menu">
+            <svg class="button__icon">
+              <use xlink:href="./img/sprite.svg#play-button" />
+            </svg>
+            <div class="button__label">شروع</div>
+          </label>
+          <label class="button popup__how" for="check__how">
+            <svg class="button__icon">
+              <use xlink:href="./img/sprite.svg#question" />
+            </svg>
+            <div class="button__label">بازی چطوریه</div>
+          </label>
         </div>
 
-        <div class="popup" id="popup__menu">
+        <input type="checkbox" name="popup" id="check__how" />
+        <div class="popup popup--back" id="popup__how">
           <div class="popup__top">
-            <div class="popup__icon"></div>
+            <div class="popup__logo"></div>
             <h2 class="popup__title">مربع های جهت دار</h2>
-            <label class="popup__close" for="popup"></label>
-          </div>
-          <p class="popup__text">
-            این بازی به افزایش <b>توجه انتخابی</b> شما کمک می‌کند. افزایش
-            <b>توجه انتخابی</b> به شما کمک می‌کند تا زودتر از بین اشیاء مختلف و
-            شبیه به هم، مواردی که خصوصیات مد نظر شما را دارند، پیدا کنید. شبیه
-            به هم، مواردی که خصوصیات مد نظر شما را دارند، پیدا کنید. شبیه به هم،
-            مواردی که خصوصیات مد نظر شما را دارند، پیدا کنید. شبیه به هم، مواردی
-            که خصوصیات مد نظر شما را دارند، پیدا کنید.
-          </p>
-          <div class="popup__bottom">
-            <button class="button popup__play">
-              <svg class="button__icon">
-                <use xlink:href="./img/sprite.svg#play-button" />
-              </svg>
-              <div class="button__label">شروع</div>
-            </button>
-            <button class="button popup__how">
-              <svg class="button__icon">
-                <use xlink:href="./img/sprite.svg#question" />
-              </svg>
-              <div class="button__label">بازی چطوریه</div>
-            </button>
-          </div>
-        </div>
-
-        <div class="popup hide" id="popup__how">
-          <div class="popup__top">
-            <div class="popup__icon"></div>
-            <h2 class="popup__title">مربع های جهت دار</h2>
-            <label class="popup__close" for="popup"></label>
+            <label class="popup__close" for="check__menu"></label>
           </div>
           <p class="popup__text">
             سه تا علامت توی سمت چپ تصویر براتون نمایش داده میشه. اون شکل‌ها رو
             از بین علامت‌های دیگه پیدا کنید...
           </p>
           <div class="popup__bottom">
-            <button class="button popup__play">
+            <label class="button popup__play" for="check__menu">
               <svg class="button__icon">
                 <use xlink:href="./img/sprite.svg#play-button" />
               </svg>
               <div class="button__label">شروع</div>
-            </button>
-            <button class="button popup__how">
+            </label>
+            <label class="button popup__how" for="check__how">
               <svg class="button__icon">
-                <use xlink:href="./img/sprite.svg#question" />
+                <use xlink:href="./img/sprite.svg#back" />
               </svg>
               <div class="button__label">بازگشت</div>
-            </button>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <input type="checkbox" name="popup" id="check__score" />
+    <div class="popup__backdrop">
+      <div class="popup popup--main" id="popup__score">
+        <div class="popup__top">
+          <svg class="popup__icon">
+            <use xlink:href="./img/sprite.svg#check" />
+          </svg>
+          <h2 class="popup__title">تبریک، شما تمامی مربع ها را پیدا کردید</h2>
+          <label class="popup__close" for="check__score"></label>
+        </div>
+
+        <div class="popup__body">
+          <div class="popup__score__item popup__score__score">
+            <div class="timer">
+              <svg
+                class="timer__svg"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g class="timer__circle">
+                  <circle
+                    class="timer__path-elapsed"
+                    cx="50"
+                    cy="50"
+                    r="45"
+                  ></circle>
+                  <path
+                    id="timer-path-remaining"
+                    stroke-dasharray="283"
+                    class="timer__path-remaining remain"
+                    d="M 50, 50
+                    m -45, 0
+                    a 45,45 0 1,0 90,0
+                    a 45,45 0 1,0 -90,0"
+                  ></path>
+                </g>
+              </svg>
+              <span id="timer-label" class="timer__label"></span>
+            </div>
+            <h3>امتیاز</h3>
+          </div>
+
+          <div class="popup__score__item popup__score__max">
+            <div class="timer">
+              <svg
+                class="timer__svg"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g class="timer__circle">
+                  <circle
+                    class="timer__path-elapsed"
+                    cx="50"
+                    cy="50"
+                    r="45"
+                  ></circle>
+                  <path
+                    id="timer-path-remaining"
+                    stroke-dasharray="283"
+                    class="timer__path-remaining remain"
+                    d="M 50, 50
+                    m -45, 0
+                    a 45,45 0 1,0 90,0
+                    a 45,45 0 1,0 -90,0"
+                  ></path>
+                </g>
+              </svg>
+              <span id="timer-label" class="timer__label"></span>
+            </div>
+            <h3>بیش ترین امتیاز</h3>
+          </div>
+
+          <div class="popup__score__item popup__score__time">
+            <div class="timer">
+              <svg
+                class="timer__svg"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g class="timer__circle">
+                  <circle
+                    class="timer__path-elapsed"
+                    cx="50"
+                    cy="50"
+                    r="45"
+                  ></circle>
+                  <path
+                    id="timer-path-remaining"
+                    stroke-dasharray="283"
+                    class="timer__path-remaining remain"
+                    d="M 50, 50
+                    m -45, 0
+                    a 45,45 0 1,0 90,0
+                    a 45,45 0 1,0 -90,0"
+                  ></path>
+                </g>
+              </svg>
+              <span id="timer-label" class="timer__label"></span>
+            </div>
+            <h3>زمان باقی مانده</h3>
+          </div>
+
+          <div class="popup__score__item popup__score__correct">
+            <span class="correct__number">0</span>
+            <h3>درست</h3>
+          </div>
+
+          <div class="popup__score__item popup__score__wrong">
+            <span class="wrong__number">0</span>
+            <h3>نادرست</h3>
           </div>
         </div>
 
+        <div class="popup__bottom">
+          <label class="button popup__play" for="check__score">
+            <svg class="button__icon">
+              <use xlink:href="./img/sprite.svg#play-button" />
+            </svg>
+            <div class="button__label">شروع</div>
+          </label>
+          <label class="button popup__how" for="check__rank">
+            <svg class="button__icon">
+              <use xlink:href="./img/sprite.svg#star" />
+            </svg>
+            <div class="button__label">نمایش رتبه</div>
+          </label>
+        </div>
+
+        <input type="checkbox" name="popup" id="check__rank" />
+        <div class="popup popup--back" id="popup__rank">
+          <div class="popup__top">
+            <div class="popup__icon"></div>
+            <h2 class="popup__title">مربع های جهت دار</h2>
+            <label class="popup__close" for="check__score"></label>
+          </div>
+          <p class="popup__text">
+            سه تا علامت توی سمت چپ تصویر براتون نمایش داده میشه. اون شکل‌ها رو
+            از بین علامت‌های دیگه پیدا کنید...
+          </p>
+          <div class="popup__bottom">
+            <label class="button popup__play" for="check__score">
+              <svg class="button__icon">
+                <use xlink:href="./img/sprite.svg#play-button" />
+              </svg>
+              <div class="button__label">شروع</div>
+            </label>
+            <label class="button popup__how" for="check__rank">
+              <svg class="button__icon">
+                <use xlink:href="./img/sprite.svg#back" />
+              </svg>
+              <div class="button__label">بازگشت</div>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
 

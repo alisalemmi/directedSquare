@@ -1,18 +1,19 @@
 let timerInterval = null;
+let remain = 0;
 
-function formatTime(time) {
+const formatTime = time => {
   const minutes = Math.floor(time / 60);
   const seconds = `${time % 60}`.padStart(2, '0');
 
   return `${minutes}:${seconds}`;
-}
+};
 
 export const stop = () => {
   clearInterval(timerInterval);
 };
 
 export const start = total => {
-  let remain = total;
+  remain = total;
 
   const tick = new CustomEvent('tick', {
     detail: {
@@ -30,8 +31,7 @@ export const start = total => {
     remain--;
 
     tick.detail.label = formatTime(remain);
-    tick.detail.circleDasharray =
-      ((remain - 1) / total + remain / (total * total)) * 283;
+    tick.detail.circleDasharray = ((remain - 1 + remain / total) / total) * 283;
     tick.detail.remainingPathColor = remain / total;
 
     document.dispatchEvent(tick);
@@ -42,3 +42,5 @@ export const start = total => {
     }
   }, 1000);
 };
+
+export const getTime = () => remain;

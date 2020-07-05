@@ -1,62 +1,86 @@
-#popup {
-  display: none;
+#check {
+  &__menu,
+  &__score {
+    display: none;
 
-  &:checked + .popup__backdrop {
-    visibility: visible;
-    backdrop-filter: blur(5px) brightness(60%);
+    &:checked + .popup__backdrop {
+      visibility: visible;
+      backdrop-filter: blur(5px) brightness(60%);
 
-    & > .popup-how {
-      transform: translate(33.33vw, 0);
-    }
-
-    & > .popup-menu {
-      transform: translate(0, 0);
-    }
-
-    & > .popup-score {
-      transform: translate(-33.33vw, 0);
-    }
-
-    // & > .popups {
-    //   transform: translate(33vw, 0);
-    // }
-
-    // & > .popup__hide {
-    //   transform: translate(-33vw, 0) !important;
-    // }
-  }
-}
-
-.popup {
-  @include card(popup);
-  position: relative;
-  padding: 2rem 3rem;
-  width: 50%;
-  transition: all 0.2s ease;
-
-  &s {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    // transform: translate(25vw, calc(-50vh - 50%));
-    transition: all ease 0.3s;
-    // background-color: red;
-
-    &.pupup__hide {
-      #popup__how {
-        visibility: hidden !important;
+      & > * {
+        transform: translate(0);
       }
     }
   }
 
-  &__hide {
-    // transform: translate(-25vw, calc(-50vh - 50%)) !important;
+  &__how,
+  &__rank {
+    display: none;
+    &:checked + .popup--back {
+      transform: translateX(0);
+    }
+  }
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  @include card(popup);
+
+  transition: all 0.5s ease;
+
+  &--main {
+    position: relative;
+    width: 50%;
+
+    @include respond(tab-port) {
+      width: 70%;
+    }
+
+    @include respond(phone) {
+      width: 100%;
+      height: 100vh;
+    }
+
+    transform: translateY(calc(-50vh - 50%));
+
+    overflow: hidden;
+  }
+
+  &--back {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+  }
+
+  &__backdrop {
+    visibility: hidden;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: all ease 0.2s;
   }
 
   &__top {
     display: flex;
     align-items: center;
+    margin-right: -2rem;
+
+    @include respond(phone) {
+      margin-bottom: 2rem;
+    }
   }
 
   &__bottom {
@@ -65,10 +89,15 @@
     margin-top: 2rem;
   }
 
-  &__icon {
+  &__logo {
     width: $popup-icon-size;
     height: $popup-icon-size;
     background: url('../img/logo.png') center center / contain;
+  }
+
+  &__icon {
+    width: $popup-icon-size;
+    height: $popup-icon-size;
   }
 
   &__close {
@@ -124,6 +153,8 @@
     font-size: 1.6rem;
     font-weight: 100;
     text-align: justify;
+
+    height: 100%;
   }
 
   &__play {
@@ -135,36 +166,37 @@
     background-color: $color-wrong;
   }
 
-  &__backdrop {
-    visibility: hidden;
-    position: relative;
-
-    display: flex;
+  &__body {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(4rem, 5rem));
+    align-content: center;
     justify-content: center;
     align-items: center;
+    justify-items: center;
+    row-gap: 2.5rem;
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    margin: 2rem 0;
     height: 100%;
-
-    transition: all ease 0.2s;
   }
-}
 
-.hide {
-  opacity: 0;
-}
+  &__score {
+    &__item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      grid-column: span 2;
+    }
 
-.popup-how {
-  transform: translate(33.33vw, calc(-50vh - 50%));
-}
+    &__correct {
+      grid-column: 2 / 4;
+    }
 
-.popup-menu {
-  transform: translate(0, calc(-50vh - 50%));
-}
-
-.popup-score {
-  transform: translate(-33.33vw, calc(-50vh - 50%));
+    &__correct,
+    &__wrong {
+      h3 {
+        margin: 0;
+      }
+    }
+  }
 }

@@ -1,9 +1,20 @@
 .puzzle {
   display: grid;
   grid-template-columns: repeat($puzzle-column, $puzzle-item-width);
+
+  @include respond(tab-port) {
+    grid-template-columns: repeat($puzzle-column, $puzzle-item-width * 0.8);
+  }
+  @media only screen and (max-height: 22.2em) {
+    grid-template-columns: repeat($puzzle-column, $puzzle-item-width * 0.7);
+  }
   gap: 1rem;
 
   @include card(center);
+
+  div {
+    backdrop-filter: blur(2px);
+  }
 }
 
 .item {
@@ -16,4 +27,14 @@
   &:hover {
     transform: scale(1.1);
   }
+}
+
+.item--correct {
+  border: 2px $color-correct solid;
+  border-radius: 5px;
+}
+
+.item--wrong {
+  border: 2px $color-wrong solid;
+  border-radius: 5px;
 }

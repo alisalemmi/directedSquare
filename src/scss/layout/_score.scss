@@ -8,9 +8,17 @@
 .total {
   text-align: center;
 
+  @include respond(phone) {
+    width: 7rem;
+  }
+
   &__number {
     display: block;
     margin-bottom: -$font-score / 4;
+
+    @include respond(phone) {
+      margin: 0;
+    }
 
     font-size: $font-score;
   }
@@ -23,10 +31,19 @@
 
 .correct {
   margin: $font-score / 3 0;
+
+  @include respond(phone) {
+    margin: 0 $font-score / 2;
+  }
 }
 
 .total {
   margin-top: $font-score / 3;
+
+  @include respond(phone) {
+    margin-top: 0;
+    margin-right: $font-score / 2;
+  }
 }
 
 .correct__number {
