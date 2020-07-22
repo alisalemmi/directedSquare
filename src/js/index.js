@@ -4,7 +4,7 @@ import * as TimerUI from './view/timer';
 import * as Timer from './model/timer';
 import * as Popup from './view/popup';
 
-const TIME = 35;
+const TIME = 30;
 
 //-----------------------------
 //            fill
@@ -22,9 +22,10 @@ const fillPage = () => {
 };
 
 const finish = isTimeUp => {
+  const time = Timer.getTime()
   Item.setFinish(true);
-  Popup.showScore(isTimeUp, Item.calcScore(), {
-    time: Timer.getTime(),
+  Popup.showScore(isTimeUp, Item.calcScore(time), {
+    time,
     total: TIME
   });
   UI.setSolution(Item.getSolution());
@@ -41,7 +42,7 @@ const clickHandler = e => {
   if (result) {
     UI.update(e.target, result);
 
-    if (Item.isFinish()) {
+    if (result.isAllFind) {
       finish(false);
       Timer.stop();
     }
@@ -49,18 +50,17 @@ const clickHandler = e => {
 };
 
 Popup.playButtonHandler(() => {
+  Popup.showRestart(() => Timer.start(TIME));
+
   reset();
   fillPage();
-  Timer.start(TIME);
 });
 
 //-----------------------------
 //            timer
 //-----------------------------
 document.addEventListener('tick', e => {
-  TimerUI.updateNumber(e.detail.label);
-  TimerUI.setCircleDasharray(e.detail.circleDasharray);
-  TimerUI.setRemainingPathColor(e.detail.remainingPathColor);
+  TimerUI.update(e.detail.remain, e.detail.total);
 });
 
 document.addEventListener('timeUp', () => finish(true));
@@ -72,8 +72,9 @@ setTimeout(() => {
   document.querySelector('#check__menu').checked = true;
 }, 7000);
 
-document.querySelector('.help').addEventListener('click', Popup.showMenu);
+Popup.helpHandler(Item.getFinish);
 
 /**
  * rank
+ * help
  */

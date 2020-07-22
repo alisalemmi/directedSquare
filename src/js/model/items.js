@@ -9,11 +9,7 @@ const state = {
   finish: true
 };
 
-/**
- * check that all items is found.
- */
-export const isFinish = () => state.total === state.score.correct;
-
+export const getFinish = () => state.finish;
 export const setFinish = isFinish => {
   state.finish = isFinish;
 };
@@ -31,10 +27,21 @@ export const reset = () => {
  * select 3 different item randomly and return them
  */
 export const selectSample = () => {
-  while (state.samples.length < 3) {
-    const r = Math.floor(Math.random() * 8 + 1);
-    if (!state.samples.includes(r)) state.samples.push(r);
-  }
+  // first item
+  state.samples.push(Math.floor(Math.random() * 4 + 5));
+
+  // second item
+  let r;
+  do r = Math.floor(Math.random() * 4 + 5);
+  while (state.samples.includes(r));
+  state.samples.push(r);
+
+  // third item
+  state.samples.splice(
+    (Math.random() * 10) % 3,
+    0,
+    Math.floor(Math.random() * 4 + 1)
+  );
 
   return state.samples;
 };
@@ -57,7 +64,7 @@ export const selectItem = (n = 36) => {
 
 /**
  * select item with this index.
- * return [isCorrect, score, total score].
+ * return [isCorrect, correct, wrong, total score, isAllFind].
  * second item in array is either number of correct or wrong.
  * @param {Number} index index of item
  */
@@ -66,17 +73,27 @@ export const select = index => {
 
   state.items[index].select = true;
 
+  let isCorrect = false;
   if (state.samples.includes(state.items[index].type)) {
-    return [true, ++state.score.correct, getScore()];
-  } else {
-    return [false, ++state.score.wrong, getScore()];
-  }
+    isCorrect = true;
+    state.score.correct++;
+  } else state.score.wrong++;
+
+  return {
+    isCorrect,
+    correct: state.score.correct,
+    wrong: state.score.wrong,
+    score: getScore(),
+    isAllFind: state.total === state.score.correct
+  };
 };
 
 const getScore = () =>
   Math.floor(
-    ((state.score.correct - state.score.wrong / 3) / state.total) * 10000
-  ) / 100;
+    ((state.score.correct - state.score.wrong) / state.total) * 1000
+  );
+
+const getTimeScore = time => Math.floor((time / (50 - state.total)) * 1000);
 
 const getMaxScore = score => {
   let scores = localStorage.getItem('score')?.split(' ');
@@ -90,14 +107,16 @@ const getMaxScore = score => {
 /**
  * calculate final score and return it.
  */
-export const calcScore = () => {
+export const calcScore = remainTime => {
   const score = getScore();
+  const timeScore = getTimeScore(remainTime);
 
   return {
     score,
+    timeScore,
     correct: state.score.correct,
     wrong: state.score.wrong,
-    max: getMaxScore(score)
+    max: getMaxScore(score + timeScore)
   };
 };
 

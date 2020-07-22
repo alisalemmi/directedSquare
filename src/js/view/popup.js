@@ -1,3 +1,5 @@
+import * as Timer from './timer';
+
 const DOM = {
   checkMenu: document.querySelector('#check__menu'),
   checkScore: document.querySelector('#check__score'),
@@ -31,34 +33,11 @@ const DOM = {
       '.popup__score__correct > .correct__number'
     ),
     wrong: document.querySelector('.popup__score__wrong > .wrong__number')
-  }
-};
-
-const formatTime = time => {
-  const minutes = Math.floor(time / 60);
-  const seconds = `${time % 60}`.padStart(2, '0');
-
-  return `${minutes}:${seconds}`;
-};
-
-const setCircleDashArray = (el, remain, total) => {
-  el.setAttribute(
-    'stroke-dasharray',
-    `${(((remain - 1 + remain / total) / total) * 283).toFixed(0)} 283`
-  );
-};
-
-const setRemainingPathColor = (el, timeRemainPercent) => {
-  if (timeRemainPercent <= 0.2) {
-    el.classList.remove('warn', 'remain');
-    el.classList.add('alert');
-  } else if (timeRemainPercent <= 0.4) {
-    el.classList.remove('remain', 'alert');
-    el.classList.add('warn');
-  } else {
-    el.classList.remove('warn', 'alert');
-    el.classList.add('remain');
-  }
+  },
+  total: document.querySelector('.total__number'),
+  container: document.querySelector('.container'),
+  popupStart: document.querySelector('.popup--start'),
+  restartTimer: document.querySelector('.timer-restart')
 };
 
 /**
@@ -75,10 +54,10 @@ const turnPlayToReset = () => {
  * do something after closeing popup. so user doesn't see what happen
  * @param {Function} func
  */
-const onClose = func => {
+const onClose = (func, timeout = 500) => {
   setTimeout(() => {
     func();
-  }, 500);
+  }, timeout);
 };
 
 /**
@@ -132,7 +111,6 @@ export const playButtonHandler = func => {
         turnPlayToReset();
         enableClose();
         backdropHandler();
-        document.querySelector('.container').style.opacity = 1;
       });
     });
   });
@@ -143,46 +121,109 @@ export const playButtonHandler = func => {
  */
 export const showMenu = () => {
   DOM.checkMenu.checked = true;
+  DOM.checkScore.checked = false;
+};
+
+const increment = (a, b) => {
+  if (a == b) return;
+
+  let i = a;
+  let dir = a > b ? -1 : 1;
+  DOM.score.score.label.innerHTML = i;
+
+  onClose(() => {
+    DOM.total.innerHTML = b;
+
+    const incTimer = setInterval(() => {
+      DOM.score.score.label.innerHTML = i;
+
+      if (i == b) clearInterval(incTimer);
+      i += dir;
+    }, 10);
+  }, 2500);
 };
 
 /**
  * show popup score
  * @param {Boolean} isTimeUp
- * @param {{score: Number, max: Number, correct: Number, wrong: Number}} score
+ * @param {{score: Number, timeScore:Number, max: Number, correct: Number, wrong: Number}} score
  * @param {{total: Number, time: Number}} time
  */
 export const showScore = (isTimeUp, score, time) => {
-  DOM.score.title.innerHTML = isTimeUp
-    ? 'زمان شما به پایان رسید'
-    : 'تبریک، شما تمامی مربع ها را پیدا کردید';
+  // title
+  if (isTimeUp) {
+    DOM.score.title.innerHTML = 'زمان تموم شد';
+    DOM.score.icon.innerHTML =
+      '<use xlink:href="./img/sprite.svg#alarm-clock" />';
+  } else if (score.wrong < 7) {
+    DOM.score.title.innerHTML = 'کارِت خوب بود';
+    DOM.score.icon.innerHTML = '<use xlink:href="./img/sprite.svg#check" />';
+  } else {
+    DOM.score.title.innerHTML = 'بیشتر تلاش کن';
+    DOM.score.icon.innerHTML = '<use xlink:href="./img/sprite.svg#close" />';
+  }
 
-  DOM.score.icon.innerHTML = isTimeUp
-    ? '<use xlink:href="./img/sprite.svg#alarm-clock" />'
-    : '<use xlink:href="./img/sprite.svg#check" />';
+  // score
+  const totalScore =
+    score.wrong < 7 ? score.score + score.timeScore : score.score;
+
+  if (score.score <= 0 && totalScore > 0) score.score = 1;
 
   DOM.score.score.label.innerHTML = score.score;
-  setCircleDashArray(DOM.score.score.ring, Math.abs(score.score), 100);
-  setRemainingPathColor(DOM.score.score.ring, score.score / 100);
+  increment(score.score, totalScore);
+
+  Timer.setCircleDashArray(DOM.score.score.ring, Math.abs(totalScore), 2000);
+  Timer.setRemainingPathColor(DOM.score.score.ring, totalScore / 2000);
   if (score.score) {
     DOM.score.score.svg.style.transform = `scaleX(${Math.sign(-score.score)})`;
     DOM.score.score.ring.style.visibility = 'visible';
   } else DOM.score.score.ring.style.visibility = 'hidden';
 
+  // max score
   DOM.score.max.label.innerHTML = score.max;
-  setCircleDashArray(DOM.score.max.ring, Math.abs(score.max), 100);
-  setRemainingPathColor(DOM.score.max.ring, score.max / 100);
+  Timer.setCircleDashArray(DOM.score.max.ring, Math.abs(score.max), 2000);
+  Timer.setRemainingPathColor(DOM.score.max.ring, score.max / 2000);
   if (score.max) {
     DOM.score.max.svg.style.transform = `scaleX(${Math.sign(-score.max)})`;
     DOM.score.max.ring.style.visibility = 'visible';
   } else DOM.score.max.ring.style.visibility = 'hidden';
 
-  DOM.score.time.label.innerHTML = formatTime(time.time);
-  setCircleDashArray(DOM.score.time.ring, time.time, time.total);
-  setRemainingPathColor(DOM.score.time.ring, time.time / time.total);
+  // remain time
+  DOM.score.time.label.innerHTML = Timer.formatTime(time.time);
+  Timer.setCircleDashArray(DOM.score.time.ring, time.time, time.total);
+  Timer.setRemainingPathColor(DOM.score.time.ring, time.time / time.total);
 
+  //correct & wrong
   DOM.score.correct.innerHTML = score.correct;
   DOM.score.wrong.innerHTML = score.wrong;
 
   DOM.checkMenu.checked = false;
   DOM.checkScore.checked = true;
+};
+
+export const helpHandler = isFinish => {
+  document.querySelector('.help').addEventListener('click', () => {
+    DOM.checkMenu.checked = !isFinish();
+    DOM.checkScore.checked = isFinish();
+  });
+};
+
+export const showRestart = calback => {
+  DOM.popupStart.classList.add('popup--start--show');
+  DOM.container.style.opacity = 0;
+
+  let t = 4;
+  const inter = setInterval(() => {
+    if (t == 4) DOM.restartTimer.innerHTML = '3';
+    else if (t > 1) DOM.restartTimer.innerHTML = t - 1;
+    else if (t == 1) {
+      DOM.restartTimer.innerHTML = '';
+      DOM.container.style.opacity = 1;
+    } else if (t == 0) {
+      DOM.popupStart.classList.remove('popup--start--show');
+      calback();
+      clearInterval(inter);
+    }
+    t--;
+  }, 1000);
 };

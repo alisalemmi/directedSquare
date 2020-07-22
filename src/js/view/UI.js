@@ -63,17 +63,15 @@ export const setItemsClick = func => {
 export const update = (target, result) => {
   target.style.opacity = 0.5;
 
-  let audio;
-  if (result[0]) {
-    DOM.correct.innerHTML = result[1];
-    audio = new Audio('./audio/correct.wav');
-  } else {
-    DOM.wrong.innerHTML = result[1];
-    audio = new Audio('./audio/wrong.wav');
-  }
+  DOM.correct.innerHTML = result.correct;
+  DOM.wrong.innerHTML = result.wrong;
+  DOM.total.innerHTML = result.score;
 
-  DOM.total.innerHTML = result[2];
-  if (!mute) audio.play();
+  if (!mute) {
+    new Audio(
+      result.isCorrect ? './audio/correct.wav' : './audio/wrong.wav'
+    ).play();
+  }
 };
 
 /**
