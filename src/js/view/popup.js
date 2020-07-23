@@ -54,10 +54,10 @@ const turnPlayToReset = () => {
  * do something after closeing popup. so user doesn't see what happen
  * @param {Function} func
  */
-const onClose = (func, timeout = 500) => {
+const onClose = func => {
   setTimeout(() => {
     func();
-  }, timeout);
+  }, 500);
 };
 
 /**
@@ -124,22 +124,59 @@ export const showMenu = () => {
   DOM.checkScore.checked = false;
 };
 
+const animateScore = (el, score, totalScore, total, isScore) => {
+  // reset
+  el.ring.style.transitionDelay = '0s';
+  el.ring.style.transitionDuration = '0s';
+  Timer.setCircleDashArray(el.ring, isScore ? 9 : 2, total);
+
+  // animate to score
+  el.label.innerHTML = isScore ? score : Timer.formatTime(score);
+  Timer.setRemainingPathColor(el.ring, totalScore / total);
+
+  setTimeout(() => {
+    el.ring.style.transitionDelay = '0.5s';
+    el.ring.style.transitionDuration = '0.5s';
+
+    if (!isScore && score === 0) score = total;
+    Timer.setCircleDashArray(el.ring, Math.abs(score), total);
+  }, 10);
+
+  if (!isScore) return;
+
+  if (score) {
+    el.svg.style.transform = `scaleX(${Math.sign(-score)})`;
+    el.ring.style.visibility = 'visible';
+  } else el.ring.style.visibility = 'hidden';
+};
+
 const increment = (a, b) => {
   if (a == b) return;
 
   let i = a;
-  let dir = a > b ? -1 : 1;
-  DOM.score.score.label.innerHTML = i;
+  let duration;
+  if (b - a < 50) duration = 10;
+  else if (b - a < 100) duration = 5;
+  else if (b - a < 300) duration = 2;
+  else if (b - a < 500) duration = 1;
+  else if (b - a < 1000) duration = 0.5;
+  else duration = 0.1;
 
-  onClose(() => {
+  setTimeout(() => {
     DOM.total.innerHTML = b;
+  }, 500);
+
+  setTimeout(() => {
+    DOM.score.score.ring.style.transitionDelay = '0s';
+    DOM.score.score.ring.style.transitionDuration = `${(b - a) * duration}ms`;
+    Timer.setCircleDashArray(DOM.score.score.ring, Math.abs(b), 2000);
 
     const incTimer = setInterval(() => {
       DOM.score.score.label.innerHTML = i;
 
       if (i == b) clearInterval(incTimer);
-      i += dir;
-    }, 10);
+      i++;
+    }, duration);
   }, 2500);
 };
 
@@ -169,29 +206,14 @@ export const showScore = (isTimeUp, score, time) => {
 
   if (score.score <= 0 && totalScore > 0) score.score = 1;
 
-  DOM.score.score.label.innerHTML = score.score;
+  animateScore(DOM.score.score, score.score, totalScore, 2000, true);
   increment(score.score, totalScore);
 
-  Timer.setCircleDashArray(DOM.score.score.ring, Math.abs(totalScore), 2000);
-  Timer.setRemainingPathColor(DOM.score.score.ring, totalScore / 2000);
-  if (score.score) {
-    DOM.score.score.svg.style.transform = `scaleX(${Math.sign(-score.score)})`;
-    DOM.score.score.ring.style.visibility = 'visible';
-  } else DOM.score.score.ring.style.visibility = 'hidden';
-
   // max score
-  DOM.score.max.label.innerHTML = score.max;
-  Timer.setCircleDashArray(DOM.score.max.ring, Math.abs(score.max), 2000);
-  Timer.setRemainingPathColor(DOM.score.max.ring, score.max / 2000);
-  if (score.max) {
-    DOM.score.max.svg.style.transform = `scaleX(${Math.sign(-score.max)})`;
-    DOM.score.max.ring.style.visibility = 'visible';
-  } else DOM.score.max.ring.style.visibility = 'hidden';
+  animateScore(DOM.score.max, score.max, score.max, 2000, true);
 
   // remain time
-  DOM.score.time.label.innerHTML = Timer.formatTime(time.time);
-  Timer.setCircleDashArray(DOM.score.time.ring, time.time, time.total);
-  Timer.setRemainingPathColor(DOM.score.time.ring, time.time / time.total);
+  animateScore(DOM.score.time, time.time, time.time, time.total, false);
 
   //correct & wrong
   DOM.score.correct.innerHTML = score.correct;
