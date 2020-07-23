@@ -22,7 +22,7 @@ const fillPage = () => {
 };
 
 const finish = isTimeUp => {
-  const time = Timer.getTime()
+  const time = Timer.getTime();
   Item.setFinish(true);
   Popup.showScore(isTimeUp, Item.calcScore(time), {
     time,

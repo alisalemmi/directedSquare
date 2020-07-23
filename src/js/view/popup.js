@@ -12,6 +12,7 @@ const DOM = {
     icon: document.querySelectorAll('.popup__play > .button__icon'),
     buttons: document.querySelectorAll('.popup__play')
   },
+  buttonHelp: document.querySelector('.popup__help'),
   score: {
     icon: document.querySelector('#popup__score .popup__icon'),
     title: document.querySelector('#popup__score .popup__title'),
@@ -81,6 +82,8 @@ const enableClose = () => {
 DOM.close.forEach(el => {
   el.addEventListener('click', () => onClose(goToHome));
 });
+
+DOM.buttonHelp.addEventListener('click', () => (DOM.checkMenu.checked = false));
 
 /**
  * close popup when clicked on backdrop

@@ -89,9 +89,7 @@ export const select = index => {
 };
 
 const getScore = () =>
-  Math.floor(
-    ((state.score.correct - state.score.wrong) / state.total) * 1000
-  );
+  Math.floor(((state.score.correct - state.score.wrong) / state.total) * 1000);
 
 const getTimeScore = time => Math.floor((time / (50 - state.total)) * 1000);
 

@@ -1,6 +1,7 @@
 #check {
   &__menu,
-  &__score {
+  &__score,
+  &__help {
     display: none;
 
     &:checked + .popup__backdrop {
@@ -54,6 +55,7 @@
     top: 0;
     left: 0;
     transform: translateX(-100%);
+    overflow-y: auto;
   }
 
   &--start {
@@ -157,12 +159,12 @@
   }
 
   &__text {
+    height: 100%;
+
     color: #333;
     font-size: 1.6rem;
     font-weight: 100;
     text-align: justify;
-
-    height: 100%;
   }
 
   &__play {
@@ -226,6 +228,10 @@
       grid-column: 1 / -1;
       margin-top: 1rem;
     }
+  }
+
+  &__help {
+    align-self: center;
   }
 }
 
