@@ -26,14 +26,16 @@ const DOM = {
       svg: document.querySelector('.popup__score__max .timer__svg'),
       ring: document.querySelector('.popup__score__max #timer-path-remaining')
     },
-    time: {
-      label: document.querySelector('.popup__score__time .timer__label'),
-      ring: document.querySelector('.popup__score__time #timer-path-remaining')
+    rank: {
+      label: document.querySelector('.popup__score__rank .timer__label'),
+      svg: document.querySelector('.popup__score__rank .timer__svg'),
+      ring: document.querySelector('.popup__score__rank #timer-path-remaining')
     },
     correct: document.querySelector(
       '.popup__score__correct > .correct__number'
     ),
-    wrong: document.querySelector('.popup__score__wrong > .wrong__number')
+    wrong: document.querySelector('.popup__score__wrong > .wrong__number'),
+    time: document.querySelector('.popup__score__time > .time__number')
   },
   total: document.querySelector('.total__number'),
   container: document.querySelector('.container'),
@@ -127,25 +129,22 @@ export const showMenu = () => {
   DOM.checkScore.checked = false;
 };
 
-const animateScore = (el, score, totalScore, total, isScore) => {
+const animateScore = (el, score, totalScore, total) => {
   // reset
   el.ring.style.transitionDelay = '0s';
   el.ring.style.transitionDuration = '0s';
-  Timer.setCircleDashArray(el.ring, isScore ? 9 : 2, total);
+  Timer.setCircleDashArray(el.ring, 9, total);
 
   // animate to score
-  el.label.innerHTML = isScore ? score : Timer.formatTime(score);
+  el.label.innerHTML = score;
   Timer.setRemainingPathColor(el.ring, totalScore / total);
 
   setTimeout(() => {
     el.ring.style.transitionDelay = '0.5s';
     el.ring.style.transitionDuration = '0.5s';
 
-    if (!isScore && score === 0) score = total;
     Timer.setCircleDashArray(el.ring, Math.abs(score), total);
   }, 10);
-
-  if (!isScore) return;
 
   if (score) {
     el.svg.style.transform = `scaleX(${Math.sign(-score)})`;
@@ -209,18 +208,19 @@ export const showScore = (isTimeUp, score, time) => {
 
   if (score.score <= 0 && totalScore > 0) score.score = 1;
 
-  animateScore(DOM.score.score, score.score, totalScore, 2000, true);
+  animateScore(DOM.score.score, score.score, totalScore, 2000);
   increment(score.score, totalScore);
 
   // max score
-  animateScore(DOM.score.max, score.max, score.max, 2000, true);
+  animateScore(DOM.score.max, score.max, score.max, 2000);
 
-  // remain time
-  animateScore(DOM.score.time, time.time, time.time, time.total, false);
+  // rank
+  animateScore(DOM.score.rank, time.time, time.time, time.total);
 
-  //correct & wrong
+  //correct & wrong & remain time
   DOM.score.correct.innerHTML = score.correct;
   DOM.score.wrong.innerHTML = score.wrong;
+  DOM.score.time.innerHTML = Timer.formatTime(time.time);
 
   DOM.checkMenu.checked = false;
   DOM.checkScore.checked = true;

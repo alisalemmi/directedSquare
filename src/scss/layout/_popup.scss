@@ -94,7 +94,9 @@
   }
 
   &__bottom {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(10rem, 12rem));
+    gap: 2rem;
     justify-content: center;
     margin-top: 2rem;
   }
@@ -169,7 +171,6 @@
 
   &__play {
     background-color: $color-correct;
-    margin-left: 2rem;
   }
 
   &__how {
@@ -206,27 +207,18 @@
       font-size: 115%;
     }
 
-    &__time-score {
-      position: absolute;
-      bottom: 0;
-      transform: translateY(-60%);
-      font-size: 65%;
-    }
-
-    &__correct {
-      grid-column: 2 / 4;
-    }
-
     &__correct,
-    &__wrong {
+    &__wrong,
+    &__time {
       h3 {
         margin: 0;
       }
     }
 
     &__solution {
-      grid-column: 1 / -1;
-      margin-top: 1rem;
+      background-color: $color-total;
+      // grid-column: 1 / -1;
+      // margin-top: 1rem;
     }
   }
 
@@ -241,4 +233,21 @@
   color: #fff;
 
   @include no-drag();
+}
+
+.time__number {
+  color: $color-total;
+
+  display: block;
+  margin-bottom: -$font-score / 4;
+
+  @include respond(phone) {
+    margin: 0;
+  }
+
+  font-size: $font-score;
+}
+
+#popup__score.popup--main .popup__bottom {
+  grid-template-columns: repeat(3, minmax(10rem, 12rem));
 }

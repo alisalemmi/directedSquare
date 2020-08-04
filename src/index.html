@@ -218,7 +218,7 @@
             <h3>امتیاز</h3>
           </div>
 
-          <div class="popup__score__item popup__score__time">
+          <div class="popup__score__item popup__score__rank">
             <div class="timer">
               <svg
                 class="timer__svg"
@@ -245,6 +245,11 @@
               </svg>
               <span id="timer-label" class="timer__label"></span>
             </div>
+            <h3>امتیاز نفر اول</h3>
+          </div>
+
+          <div class="popup__score__item popup__score__time">
+            <span class="time__number">0:00</span>
             <h3>زمان باقی مانده</h3>
           </div>
 
@@ -257,10 +262,6 @@
             <span class="wrong__number">0</span>
             <h3>نادرست</h3>
           </div>
-
-          <label class="popup__score__solution btn-second" for="check__score">
-            نمایش پاسخ
-          </label>
         </div>
 
         <div class="popup__bottom">
@@ -275,6 +276,12 @@
               <use xlink:href="./img/sprite.svg#star" />
             </svg>
             <div class="button__label">نمایش رتبه</div>
+          </label>
+          <label class="button popup__score__solution" for="check__score">
+            <svg class="button__icon">
+              <use xlink:href="./img/sprite.svg#idea" />
+            </svg>
+            <div class="button__label">نمایش پاسخ</div>
           </label>
         </div>
 
