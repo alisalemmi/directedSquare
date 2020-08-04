@@ -1,3 +1,19 @@
+import '../scss/main';
+
+import '../img/1.png';
+import '../img/2.png';
+import '../img/3.png';
+import '../img/4.png';
+import '../img/5.png';
+import '../img/6.png';
+import '../img/7.png';
+import '../img/8.png';
+import '../img/logo2.png';
+import '../img/sprite.svg';
+
+import '../audio/correct.wav';
+import '../audio/wrong.wav';
+
 import * as UI from './view/UI';
 import * as Item from './model/items';
 import * as TimerUI from './view/timer';

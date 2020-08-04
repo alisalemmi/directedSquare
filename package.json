@@ -4,34 +4,59 @@
   "description": "second project on ponisha",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+    "start:win": "SET NODE_ENV=development&& webpack-dev-server --mode=development --open",
+    "dev:win": "SET NODE_ENV=development&& webpack --mode=development",
+    "build:win": "SET NODE_ENV=production&& webpack --mode=production",
+    "start": "NODE_ENV=development webpack-dev-server --mode=development --open",
+    "dev": "NODE_ENV=development webpack --mode=development",
+    "build": "NODE_ENV=production webpack --mode=production"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alisalemmi/simpleGame.git"
+  },
+  "keywords": [
+    "simple game",
+    "magic square"
+  ],
   "author": "ali salemmi",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alisalemmi/colorSquare/issues"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "homepage": "https://github.com/alisalemmi/simpleGame#readme",
   "devDependencies": {
-    "@babel/core": "^7.10.3",
-    "@babel/preset-env": "^7.10.3",
-    "a11y": "^0.5.1",
-    "babel-core": "^6.26.3",
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "autoprefixer": "^9.8.6",
     "babel-loader": "^8.1.0",
-    "eslint": "^7.3.1",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-prettier": "^6.11.0",
+    "css-loader": "^4.2.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jsx": "^0.1.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.0",
+    "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
+    "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.14.1",
+    "postcss-loader": "^3.0.0",
     "prettier": "^2.0.5",
-    "webpack": "^4.43.0",
+    "pretty-quick": "^2.0.1",
+    "resolve-url-loader": "^3.1.1",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
-  },
-  "dependencies": {
-    "babel": "^6.23.0"
   }
 }

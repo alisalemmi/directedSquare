@@ -1,11 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
+  mode: 'development',
   entry: './src/js/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: './js/bundle.js'
+    filename: './js/bundle.js',
+    path: path.resolve(__dirname, 'dist')
   },
   devServer: {
     contentBase: './dist'
@@ -14,6 +17,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'css/main.css'
     })
   ],
   module: {
@@ -21,10 +27,37 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        exclude: /node_modules/,
+        use: [
+          process.env.NODE_ENV !== 'production'
+            ? 'style-loader'
+            : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: '../'
+                }
+              },
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer()]
+            }
+          },
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|svg|ttf|wav)$/i,
+        loader: 'file-loader?name=[folder]/[name].[ext]'
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.scss']
   }
 };
