@@ -12,33 +12,20 @@
 
   @include card(center);
 
-  div {
-    backdrop-filter: blur(2px);
-  }
-}
+  &__item {
+    display: block;
+    width: 100%;
 
-.item {
-  width: 100%;
+    transition: all 0.3s ease;
 
-  transition: all 0.3s ease;
+    @include no-drag;
 
-  @include no-drag;
+    &:hover {
+      transform: scale(1.1);
 
-  &:hover {
-    transform: scale(1.1);
-
-    @media (hover: none) {
-      transform: none;
+      @media (hover: none) {
+        transform: none;
+      }
     }
   }
-}
-
-.item--correct {
-  border: 2px $color-correct solid;
-  border-radius: 5px;
-}
-
-.item--wrong {
-  border: 2px $color-wrong solid;
-  border-radius: 5px;
 }

@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+
+  @include respond(tab-land) {
+    font-size: 56.25%;
+  }
+
+  @include respond(tab-port) {
+    font-size: 50%;
+  }
+
+  @include respond(phone) {
+    font-size: 50%;
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: url('../img/background.JPG') top left/cover;
+
+  font-family: 'vazir';
+  direction: rtl;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  transition: all 1s ease;
+
+  opacity: 0;
+
+  @include respond(phone) {
+    flex-direction: column;
+  }
+}
+
+.help {
+  position: fixed;
+  bottom: $button-margin;
+  right: $button-margin;
+  width: 3rem;
+  height: 3rem;
+}
+
+.mute {
+  position: fixed;
+  bottom: $button-margin;
+  left: $button-margin;
+  width: 3rem;
+  height: 3rem;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+}

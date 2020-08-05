@@ -19,25 +19,25 @@ const DOM = {
     score: {
       label: document.querySelector('.popup__score__score .timer__label'),
       svg: document.querySelector('.popup__score__score .timer__svg'),
-      ring: document.querySelector('.popup__score__score #timer-path-remaining')
+      ring: document.querySelector(
+        '.popup__score__score .timer__path-remaining'
+      )
     },
     max: {
       label: document.querySelector('.popup__score__max .timer__label'),
       svg: document.querySelector('.popup__score__max .timer__svg'),
-      ring: document.querySelector('.popup__score__max #timer-path-remaining')
+      ring: document.querySelector('.popup__score__max .timer__path-remaining')
     },
     rank: {
       label: document.querySelector('.popup__score__rank .timer__label'),
       svg: document.querySelector('.popup__score__rank .timer__svg'),
-      ring: document.querySelector('.popup__score__rank #timer-path-remaining')
+      ring: document.querySelector('.popup__score__rank .timer__path-remaining')
     },
-    correct: document.querySelector(
-      '.popup__score__correct > .correct__number'
-    ),
-    wrong: document.querySelector('.popup__score__wrong > .wrong__number'),
-    time: document.querySelector('.popup__score__time > .time__number')
+    correct: document.querySelector('.popup__score__correct__number'),
+    wrong: document.querySelector('.popup__score__wrong__number'),
+    time: document.querySelector('.popup__score__time__number')
   },
-  total: document.querySelector('.total__number'),
+  total: document.querySelector('.scoreboard__total__number'),
   container: document.querySelector('.container'),
   popupStart: document.querySelector('.popup--start'),
   restartTimer: document.querySelector('.timer-restart')
@@ -235,7 +235,7 @@ export const helpHandler = isFinish => {
 
 export const showRestart = calback => {
   DOM.popupStart.classList.add('popup--start--show');
-  DOM.container.style.opacity = 0;
+  // DOM.container.style.opacity = 0;
 
   let t = 4;
   const inter = setInterval(() => {

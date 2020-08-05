@@ -1,7 +1,6 @@
 #check {
   &__menu,
-  &__score,
-  &__help {
+  &__score {
     display: none;
 
     &:checked + .popup__backdrop {
@@ -94,9 +93,7 @@
   }
 
   &__bottom {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(10rem, 12rem));
-    gap: 2rem;
+    display: flex;
     justify-content: center;
     margin-top: 2rem;
   }
@@ -171,6 +168,7 @@
 
   &__play {
     background-color: $color-correct;
+    margin-left: 2rem;
   }
 
   &__how {
@@ -210,15 +208,40 @@
     &__correct,
     &__wrong,
     &__time {
+      text-align: center;
+
+      @include respond(phone) {
+        width: 7rem;
+      }
+
+      &__number {
+        display: block;
+        margin-bottom: -$font-score / 4;
+
+        @include respond(phone) {
+          margin: 0;
+        }
+
+        font-size: $font-score;
+      }
+
       h3 {
         margin: 0;
+        font-size: $font-score / 2;
       }
     }
 
-    &__solution {
-      background-color: $color-total;
-      // grid-column: 1 / -1;
-      // margin-top: 1rem;
+    &__correct__number {
+      color: $color-correct;
+    }
+
+    &__wrong__number {
+      color: $color-wrong;
+    }
+
+    &__time__number {
+      direction: ltr;
+      color: $color-total;
     }
   }
 
@@ -235,19 +258,15 @@
   @include no-drag();
 }
 
-.time__number {
-  color: $color-total;
+// .time__number {
+//   color: $color-total;
 
-  display: block;
-  margin-bottom: -$font-score / 4;
+//   display: block;
+//   margin-bottom: -$font-score / 4;
 
-  @include respond(phone) {
-    margin: 0;
-  }
+//   @include respond(phone) {
+//     margin: 0;
+//   }
 
-  font-size: $font-score;
-}
-
-#popup__score.popup--main .popup__bottom {
-  grid-template-columns: repeat(3, minmax(10rem, 12rem));
-}
+//   font-size: $font-score;
+// }

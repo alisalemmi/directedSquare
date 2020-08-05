@@ -9,6 +9,8 @@
     "sourceType": "module"
   },
   "rules": {
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "linebreak-style": "off",
+    "arrow-parens": "off"
   }
 }

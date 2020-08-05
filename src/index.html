@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="score">
+      <div class="scoreboard">
         <div class="timer">
           <svg
             class="timer__svg"
@@ -24,44 +24,46 @@
                 r="45"
               ></circle>
               <path
-                id="timer-path-remaining"
+                class="timer__path-remaining timer__color__remain"
                 stroke-dasharray="283"
-                class="timer__path-remaining remain"
                 d="
-                  M 50, 50
-                  m -45, 0
-                  a 45,45 0 1,0 90,0
-                  a 45,45 0 1,0 -90,0
-                "
+                          M 50, 50
+                          m -45, 0
+                          a 45,45 0 1,0 90,0
+                          a 45,45 0 1,0 -90,0
+                        "
               ></path>
             </g>
           </svg>
-          <span id="timer-label" class="timer__label"></span>
+          <span class="timer__label">0:00</span>
         </div>
 
-        <div class="correct">
-          <span class="correct__number">0</span>
+        <div class="scoreboard__correct">
+          <span class="scoreboard__correct__number">0</span>
           <h3>درست</h3>
         </div>
 
-        <div class="wrong">
-          <span class="wrong__number">0</span>
+        <div class="scoreboard__wrong">
+          <span class="scoreboard__wrong__number">0</span>
           <h3>نادرست</h3>
         </div>
 
-        <div class="total">
-          <span class="total__number">0</span>
+        <div class="scoreboard__total">
+          <span class="scoreboard__total__number">0</span>
           <h3>امتیاز</h3>
         </div>
       </div>
 
       <div class="puzzle"></div>
-      <div class="samples"></div>
+
+      <div class="sample"></div>
+
       <div class="help">
         <svg class="icon">
           <use xlink:href="./img/sprite.svg#home" />
         </svg>
       </div>
+
       <div class="mute">
         <svg class="icon">
           <use xlink:href="./img/sprite.svg#speaker" />
@@ -120,11 +122,9 @@
             یا مشاهده نتیجه باز می شود.
           </p>
 
-          <input type="checkbox" name="popup" id="check__help" />
-          <label class="popup__help btn-second" for="check__help">
+          <a class="popup__help btn-second" href="#">
             راهنمایی بیش تر
-          </label>
-          <div class="help__page"></div>
+          </a>
           <div class="popup__bottom">
             <label class="button popup__play" for="check__menu">
               <svg class="button__icon">
@@ -170,17 +170,16 @@
                     r="45"
                   ></circle>
                   <path
-                    id="timer-path-remaining"
+                    class="timer__path-remaining timer__coler__remain"
                     stroke-dasharray="283"
-                    class="timer__path-remaining remain"
                     d="M 50, 50
-                    m -45, 0
-                    a 45,45 0 1,0 90,0
-                    a 45,45 0 1,0 -90,0"
+                        m -45, 0
+                        a 45,45 0 1,0 90,0
+                        a 45,45 0 1,0 -90,0"
                   ></path>
                 </g>
               </svg>
-              <span id="timer-label" class="timer__label"></span>
+              <span class="timer__label"></span>
             </div>
             <h3>بیش ترین امتیاز</h3>
           </div>
@@ -200,20 +199,16 @@
                     r="45"
                   ></circle>
                   <path
-                    id="timer-path-remaining"
+                    class="timer__path-remaining timer__color__remain"
                     stroke-dasharray="283"
-                    class="timer__path-remaining remain"
                     d="M 50, 50
-                              m -45, 0
-                              a 45,45 0 1,0 90,0
-                              a 45,45 0 1,0 -90,0"
+                                  m -45, 0
+                                  a 45,45 0 1,0 90,0
+                                  a 45,45 0 1,0 -90,0"
                   ></path>
                 </g>
               </svg>
-              <span
-                id="timer-label"
-                class="timer__label timer__label--score"
-              ></span>
+              <span class="timer__label timer__label--score"></span>
             </div>
             <h3>امتیاز</h3>
           </div>
@@ -233,33 +228,32 @@
                     r="45"
                   ></circle>
                   <path
-                    id="timer-path-remaining"
+                    class="timer__path-remaining timer__color__remain"
                     stroke-dasharray="283"
-                    class="timer__path-remaining remain"
                     d="M 50, 50
-                    m -45, 0
-                    a 45,45 0 1,0 90,0
-                    a 45,45 0 1,0 -90,0"
+                        m -45, 0
+                        a 45,45 0 1,0 90,0
+                        a 45,45 0 1,0 -90,0"
                   ></path>
                 </g>
               </svg>
-              <span id="timer-label" class="timer__label"></span>
+              <span class="timer__label"></span>
             </div>
             <h3>امتیاز نفر اول</h3>
           </div>
 
           <div class="popup__score__item popup__score__time">
-            <span class="time__number">0:00</span>
+            <span class="popup__score__time__number">0:00</span>
             <h3>زمان باقی مانده</h3>
           </div>
 
           <div class="popup__score__item popup__score__correct">
-            <span class="correct__number">0</span>
+            <span class="popup__score__correct__number">0</span>
             <h3>درست</h3>
           </div>
 
           <div class="popup__score__item popup__score__wrong">
-            <span class="wrong__number">0</span>
+            <span class="popup__score__wrong__number">0</span>
             <h3>نادرست</h3>
           </div>
         </div>
@@ -276,12 +270,6 @@
               <use xlink:href="./img/sprite.svg#star" />
             </svg>
             <div class="button__label">نمایش رتبه</div>
-          </label>
-          <label class="button popup__score__solution" for="check__score">
-            <svg class="button__icon">
-              <use xlink:href="./img/sprite.svg#idea" />
-            </svg>
-            <div class="button__label">نمایش پاسخ</div>
           </label>
         </div>
 

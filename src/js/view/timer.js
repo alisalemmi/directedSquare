@@ -1,6 +1,6 @@
 const DOM = {
-  path: document.getElementById('timer-path-remaining'),
-  label: document.getElementById('timer-label')
+  path: document.querySelector('.timer__path-remaining'),
+  label: document.querySelector('.timer__label')
 };
 
 export const formatTime = time => {

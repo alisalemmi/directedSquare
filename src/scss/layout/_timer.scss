@@ -28,16 +28,18 @@
     transition: 1s linear all;
   }
 
-  &__path-remaining.remain {
-    color: $timer-color-remain;
-  }
+  &__color {
+    &__remain {
+      color: $timer-color-remain;
+    }
 
-  &__path-remaining.warn {
-    color: $timer-color-warn;
-  }
+    &__warn {
+      color: $timer-color-warn;
+    }
 
-  &__path-remaining.alert {
-    color: $timer-color-alert;
+    &__alert {
+      color: $timer-color-alert;
+    }
   }
 
   &__label {

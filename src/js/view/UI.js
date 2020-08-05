@@ -1,11 +1,11 @@
 const DOM = {
   puzzle: document.querySelector('.puzzle'),
   time: document.querySelector('.timer-number'),
-  samples: document.querySelector('.samples'),
+  samples: document.querySelector('.sample'),
   items: null,
-  correct: document.querySelector('.correct__number'),
-  wrong: document.querySelector('.wrong__number'),
-  total: document.querySelector('.total__number'),
+  correct: document.querySelector('.scoreboard__correct__number'),
+  wrong: document.querySelector('.scoreboard__wrong__number'),
+  total: document.querySelector('.scoreboard__total__number'),
   mute: document.querySelector('.mute')
 };
 
@@ -24,7 +24,7 @@ export const reset = () => {
 export const addSample = samples => {
   DOM.samples.innerHTML = '';
   for (const i of samples)
-    DOM.samples.innerHTML += `<div><img src="./img/${i}.png" alt="Sample${i}" class="sample"/></div>`;
+    DOM.samples.innerHTML += `<div><img src="./img/${i}.png" alt="Sample${i}" class="sample__item"/></div>`;
 };
 
 /**
@@ -38,7 +38,9 @@ export const addItem = items => {
   for (const item of items)
     DOM.puzzle.innerHTML += `<div><img src="./img/${
       item.type
-    }.png" alt="Sample${item.type}" class="item" data-num=${i++}/></div>`;
+    }.png" alt="Sample${
+      item.type
+    }" class="puzzle__item" data-num=${i++}/></div>`;
 };
 
 /**
@@ -46,7 +48,7 @@ export const addItem = items => {
  * @param {EventListenerOrEventListenerObject} func
  */
 export const setItemsClick = func => {
-  DOM.items = document.querySelectorAll('.item');
+  DOM.items = document.querySelectorAll('.puzzle__item');
 
   DOM.items.forEach(item => {
     item.addEventListener('click', func);

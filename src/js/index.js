@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/extensions, import/no-unresolved
 import '../scss/main';
 
 import '../img/1.png';
