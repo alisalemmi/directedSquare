@@ -1,11 +1,10 @@
 const DOM = {
-  puzzle: document.querySelector('.puzzle'),
-  time: document.querySelector('.timer-number'),
   samples: document.querySelector('.sample'),
-  items: null,
+  puzzle: document.querySelector('.puzzle'),
   correct: document.querySelector('.scoreboard__correct__number'),
   wrong: document.querySelector('.scoreboard__wrong__number'),
   total: document.querySelector('.scoreboard__total__number'),
+  items: [],
   mute: document.querySelector('.mute')
 };
 
@@ -18,10 +17,10 @@ export const reset = () => {
 };
 
 /**
- * add selected samples to page
+ * add selected samples to ui
  * @param {Number[]} samples
  */
-export const addSample = samples => {
+export const addSamples = samples => {
   DOM.samples.innerHTML = '';
   for (const i of samples)
     DOM.samples.innerHTML += `<div><img src="./img/${i}.png" alt="Sample${i}" class="sample__item"/></div>`;
@@ -36,11 +35,7 @@ export const addItem = items => {
 
   let i = 0;
   for (const item of items)
-    DOM.puzzle.innerHTML += `<div><img src="./img/${
-      item.type
-    }.png" alt="Sample${
-      item.type
-    }" class="puzzle__item" data-num=${i++}/></div>`;
+    DOM.puzzle.innerHTML += `<div><img src="./img/${item}.png" alt="Sample${item}" class="puzzle__item" data-num=${i++}/></div>`;
 };
 
 /**
@@ -60,10 +55,10 @@ export const setItemsClick = func => {
  * 2- update score
  * 3- play audio
  * @param {Element} target
- * @param {[Boolean, Number, Number]} result
+ * @param {[Boolean, Number, Number, Number]} result
  */
 export const update = (target, result) => {
-  target.style.opacity = 0.5;
+  // target.style.opacity = 0.5;
 
   DOM.correct.innerHTML = result.correct;
   DOM.wrong.innerHTML = result.wrong;
@@ -74,16 +69,6 @@ export const update = (target, result) => {
       result.isCorrect ? './audio/correct.wav' : './audio/wrong.wav'
     ).play();
   }
-};
-
-/**
- *
- * @param {Number[]} solution
- */
-export const setSolution = solution => {
-  DOM.items.forEach((item, i) => {
-    item.classList.add(solution[i] ? 'item--correct' : 'item--wrong');
-  });
 };
 
 DOM.mute.addEventListener('click', () => {

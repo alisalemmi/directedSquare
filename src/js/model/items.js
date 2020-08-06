@@ -46,20 +46,41 @@ export const selectSample = () => {
   return state.samples;
 };
 
+const getRandomItem = () => {
+  const r = Math.floor(Math.random() * 8 + 1);
+  if (state.samples.includes(r)) state.total++;
+  return r;
+};
+
 /**
  * select item randomly for filling in puzzle
  * @param {Number} n number of item in puzzle
  */
 export const selectItem = (n = 36) => {
-  for (let i = 0; i < n; i++) {
-    const r = Math.floor(Math.random() * 8 + 1);
-    state.items.push({ type: r, select: false });
+  state.items = [];
+  state.total = 0;
 
-    if (state.samples.includes(r)) state.total++;
-  }
+  for (let i = 0; i < n; i++) state.items.push(getRandomItem());
 
   if (state.total !== 0) return state.items;
   return selectItem();
+};
+
+const getScore = () =>
+  Math.floor(((state.score.correct - state.score.wrong) / state.total) * 1000);
+
+/**
+ * calculate final score and return it.
+ */
+export const calcScore = () => {
+  const score = getScore();
+
+  return {
+    score,
+    correct: state.score.correct,
+    wrong: state.score.wrong,
+    max: score // TODO
+  };
 };
 
 /**
@@ -69,54 +90,18 @@ export const selectItem = (n = 36) => {
  * @param {Number} index index of item
  */
 export const select = index => {
-  if (state.finish || state.items[index].select) return;
+  if (state.finish) return;
 
-  state.items[index].select = true;
+  state.items[index] = getRandomItem();
 
-  let isCorrect = false;
-  if (state.samples.includes(state.items[index].type)) {
-    isCorrect = true;
-    state.score.correct++;
-  } else state.score.wrong++;
+  const isCorrect = state.samples.includes(state.items[index]);
+  if (isCorrect) state.score.correct++;
+  else state.score.wrong++;
 
   return {
     isCorrect,
     correct: state.score.correct,
     wrong: state.score.wrong,
-    score: getScore(),
-    isAllFind: state.total === state.score.correct
+    score: getScore()
   };
 };
-
-const getScore = () =>
-  Math.floor(((state.score.correct - state.score.wrong) / state.total) * 1000);
-
-const getTimeScore = time => Math.floor((time / (50 - state.total)) * 1000);
-
-const getMaxScore = score => {
-  let scores = localStorage.getItem('score')?.split(' ');
-  if (scores == null) scores = [];
-  scores.push(score);
-  localStorage.setItem('score', scores.join(' '));
-
-  return Math.max(...scores);
-};
-
-/**
- * calculate final score and return it.
- */
-export const calcScore = remainTime => {
-  const score = getScore();
-  const timeScore = getTimeScore(remainTime);
-
-  return {
-    score,
-    timeScore,
-    correct: state.score.correct,
-    wrong: state.score.wrong,
-    max: getMaxScore(score + timeScore)
-  };
-};
-
-export const getSolution = () =>
-  state.items.map(val => state.samples.includes(val.type));

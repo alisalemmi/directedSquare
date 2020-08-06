@@ -24,31 +24,6 @@ import * as Popup from './view/popup';
 const TIME = 30;
 
 //-----------------------------
-//            fill
-//-----------------------------
-const reset = () => {
-  Item.reset();
-  UI.reset();
-};
-
-const fillPage = () => {
-  UI.addSample(Item.selectSample());
-  UI.addItem(Item.selectItem());
-
-  UI.setItemsClick(clickHandler);
-};
-
-const finish = isTimeUp => {
-  const time = Timer.getTime();
-  Item.setFinish(true);
-  Popup.showScore(isTimeUp, Item.calcScore(time), {
-    time,
-    total: TIME
-  });
-  UI.setSolution(Item.getSolution());
-};
-
-//-----------------------------
 //            click
 //-----------------------------
 const clickHandler = e => {
@@ -56,21 +31,30 @@ const clickHandler = e => {
 
   const result = Item.select(index);
 
-  if (result) {
-    UI.update(e.target, result);
-
-    if (result.isAllFind) {
-      finish(false);
-      Timer.stop();
-    }
-  }
+  if (result) UI.update(e.target, result);
 };
 
+const finish = () => {
+  Item.setFinish(true);
+  Popup.showScore(Item.calcScore());
+};
+//-----------------------------
+//            fill
+//-----------------------------
 Popup.playButtonHandler(() => {
+  // show 3 2 1
   Popup.showRestart(() => Timer.start(TIME));
 
-  reset();
-  fillPage();
+  // reset
+  UI.reset();
+  Item.reset();
+
+  // add items
+  UI.addSamples(Item.selectSample());
+  UI.addItem(Item.selectItem());
+
+  // handle click
+  UI.setItemsClick(clickHandler);
 });
 
 //-----------------------------
@@ -80,7 +64,7 @@ document.addEventListener('tick', e => {
   TimerUI.update(e.detail.remain, e.detail.total);
 });
 
-document.addEventListener('timeUp', () => finish(true));
+document.addEventListener('timeUp', finish);
 
 //-----------------------------
 //            other
@@ -90,8 +74,3 @@ setTimeout(() => {
 }, 7000);
 
 Popup.helpHandler(Item.getFinish);
-
-/**
- * rank
- * help
- */

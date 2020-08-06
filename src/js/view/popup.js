@@ -129,21 +129,21 @@ export const showMenu = () => {
   DOM.checkScore.checked = false;
 };
 
-const animateScore = (el, score, totalScore, total) => {
+const animateScore = (el, score, max) => {
   // reset
   el.ring.style.transitionDelay = '0s';
   el.ring.style.transitionDuration = '0s';
-  Timer.setCircleDashArray(el.ring, 9, total);
+  Timer.setCircleDashArray(el.ring, 9, max);
 
   // animate to score
   el.label.innerHTML = score;
-  Timer.setRemainingPathColor(el.ring, totalScore / total);
+  Timer.setRemainingPathColor(el.ring, score / max);
 
   setTimeout(() => {
     el.ring.style.transitionDelay = '0.5s';
     el.ring.style.transitionDuration = '0.5s';
 
-    Timer.setCircleDashArray(el.ring, Math.abs(score), total);
+    Timer.setCircleDashArray(el.ring, Math.abs(score), max);
   }, 10);
 
   if (score) {
@@ -152,31 +152,29 @@ const animateScore = (el, score, totalScore, total) => {
   } else el.ring.style.visibility = 'hidden';
 };
 
-const increment = (a, b) => {
-  if (a == b) return;
-
-  let i = a;
+const increment = a => {
+  let i = 0;
   let duration;
-  if (b - a < 50) duration = 10;
-  else if (b - a < 100) duration = 5;
-  else if (b - a < 300) duration = 2;
-  else if (b - a < 500) duration = 1;
-  else if (b - a < 1000) duration = 0.5;
+  if (a < 50) duration = 10;
+  else if (a < 100) duration = 5;
+  else if (a < 300) duration = 2;
+  else if (a < 500) duration = 1;
+  else if (a < 1000) duration = 0.5;
   else duration = 0.1;
 
   setTimeout(() => {
-    DOM.total.innerHTML = b;
+    DOM.total.innerHTML = 0;
   }, 500);
 
   setTimeout(() => {
     DOM.score.score.ring.style.transitionDelay = '0s';
-    DOM.score.score.ring.style.transitionDuration = `${(b - a) * duration}ms`;
-    Timer.setCircleDashArray(DOM.score.score.ring, Math.abs(b), 2000);
+    DOM.score.score.ring.style.transitionDuration = `${a * duration}ms`;
+    Timer.setCircleDashArray(DOM.score.score.ring, Math.abs(a), 2000);
 
     const incTimer = setInterval(() => {
       DOM.score.score.label.innerHTML = i;
 
-      if (i == b) clearInterval(incTimer);
+      if (i == a) clearInterval(incTimer);
       i++;
     }, duration);
   }, 2500);
@@ -188,13 +186,9 @@ const increment = (a, b) => {
  * @param {{score: Number, timeScore:Number, max: Number, correct: Number, wrong: Number}} score
  * @param {{total: Number, time: Number}} time
  */
-export const showScore = (isTimeUp, score, time) => {
+export const showScore = score => {
   // title
-  if (isTimeUp) {
-    DOM.score.title.innerHTML = 'زمان تموم شد';
-    DOM.score.icon.innerHTML =
-      '<use xlink:href="./img/sprite.svg#alarm-clock" />';
-  } else if (score.wrong < 7) {
+  if (score.wrong < score.correct / 2) {
     DOM.score.title.innerHTML = 'کارِت خوب بود';
     DOM.score.icon.innerHTML = '<use xlink:href="./img/sprite.svg#check" />';
   } else {
@@ -202,25 +196,18 @@ export const showScore = (isTimeUp, score, time) => {
     DOM.score.icon.innerHTML = '<use xlink:href="./img/sprite.svg#close" />';
   }
 
-  // score
-  const totalScore =
-    score.wrong < 7 ? score.score + score.timeScore : score.score;
-
-  if (score.score <= 0 && totalScore > 0) score.score = 1;
-
-  animateScore(DOM.score.score, score.score, totalScore, 2000);
-  increment(score.score, totalScore);
+  animateScore(DOM.score.score, score.score, 2000);
+  increment(score.score);
 
   // max score
-  animateScore(DOM.score.max, score.max, score.max, 2000);
+  animateScore(DOM.score.max, score.max, 2000);
 
   // rank
-  animateScore(DOM.score.rank, time.time, time.time, time.total);
+  animateScore(DOM.score.rank, score.max, 2000);
 
   //correct & wrong & remain time
   DOM.score.correct.innerHTML = score.correct;
   DOM.score.wrong.innerHTML = score.wrong;
-  DOM.score.time.innerHTML = Timer.formatTime(time.time);
 
   DOM.checkMenu.checked = false;
   DOM.checkScore.checked = true;
@@ -235,7 +222,7 @@ export const helpHandler = isFinish => {
 
 export const showRestart = calback => {
   DOM.popupStart.classList.add('popup--start--show');
-  // DOM.container.style.opacity = 0;
+  DOM.container.style.opacity = 0;
 
   let t = 4;
   const inter = setInterval(() => {
