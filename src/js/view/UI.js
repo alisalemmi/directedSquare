@@ -35,7 +35,7 @@ export const addItem = items => {
 
   let i = 0;
   for (const item of items)
-    DOM.puzzle.innerHTML += `<div><img src="./img/${item}.png" alt="Sample${item}" class="puzzle__item" data-num=${i++}/></div>`;
+    DOM.puzzle.innerHTML += `<div class="puzzle__item__box"><img src="./img/${item}.png" alt="Sample${item}" class="puzzle__item" data-num=${i++}/></div>`;
 };
 
 /**
@@ -55,10 +55,33 @@ export const setItemsClick = func => {
  * 2- update score
  * 3- play audio
  * @param {Element} target
- * @param {[Boolean, Number, Number, Number]} result
+ * @param {{isCorrect, correct, wrong, score, newItem}} result
  */
 export const update = (target, result) => {
-  // target.style.opacity = 0.5;
+  target.parentElement.classList.remove(
+    'puzzle__item__box--correct',
+    'puzzle__item__box--wrong'
+  );
+
+  target.style.transform = 'scale(0)';
+
+  target.parentElement.classList.add(
+    `puzzle__item__box${result.isCorrect ? '--correct' : '--wrong'}`,
+    'puzzle__item__box--select'
+  );
+
+  setTimeout(() => {
+    target.setAttribute('src', `./img/${result.newItem}.png`);
+    target.setAttribute('alt', `Sample${result.newItem}`);
+  }, 300);
+
+  setTimeout(() => {
+    target.style.transform = 'scale(1)';
+  }, 320);
+
+  setTimeout(() => {
+    target.parentElement.classList.remove('puzzle__item__box--select');
+  }, 500);
 
   DOM.correct.innerHTML = result.correct;
   DOM.wrong.innerHTML = result.wrong;

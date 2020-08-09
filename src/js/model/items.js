@@ -46,10 +46,14 @@ export const selectSample = () => {
   return state.samples;
 };
 
-const getRandomItem = () => {
-  const r = Math.floor(Math.random() * 8 + 1);
-  if (state.samples.includes(r)) state.total++;
-  return r;
+const getRandomItem = (old = 10) => {
+  let newItem = Math.floor(Math.random() * (7 + (old == 10)) + 1);
+
+  if (newItem >= old) newItem++;
+
+  if (state.samples.includes(newItem)) state.total++;
+
+  return newItem;
 };
 
 /**
@@ -92,16 +96,20 @@ export const calcScore = () => {
 export const select = index => {
   if (state.finish) return;
 
-  state.items[index] = getRandomItem();
-
+  // check that selected item is correct
   const isCorrect = state.samples.includes(state.items[index]);
+
   if (isCorrect) state.score.correct++;
   else state.score.wrong++;
+
+  // change selected item
+  state.items[index] = getRandomItem(state.items[index]);
 
   return {
     isCorrect,
     correct: state.score.correct,
     wrong: state.score.wrong,
-    score: getScore()
+    score: getScore(),
+    newItem: state.items[index]
   };
 };

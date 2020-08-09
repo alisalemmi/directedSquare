@@ -19,14 +19,14 @@ export const setCircleDashArray = (el, remain, total) => {
 
 export const setRemainingPathColor = (el, timeRemainPercent) => {
   if (timeRemainPercent <= 0.2) {
-    el.classList.remove('warn', 'remain');
-    el.classList.add('alert');
+    el.classList.remove('timer__color__warn', 'timer__color__remain');
+    el.classList.add('timer__color__alert');
   } else if (timeRemainPercent <= 0.4) {
-    el.classList.remove('remain', 'alert');
-    el.classList.add('warn');
+    el.classList.remove('timer__color__remain', 'timer__color__alert');
+    el.classList.add('timer__color__warn');
   } else {
-    el.classList.remove('warn', 'alert');
-    el.classList.add('remain');
+    el.classList.remove('timer__color__warn', 'timer__color__alert');
+    el.classList.add('timer__color__remain');
   }
 };
 

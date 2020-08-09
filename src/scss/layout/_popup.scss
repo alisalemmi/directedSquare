@@ -206,8 +206,7 @@
     }
 
     &__correct,
-    &__wrong,
-    &__time {
+    &__wrong {
       text-align: center;
 
       @include respond(phone) {
@@ -231,17 +230,16 @@
       }
     }
 
-    &__correct__number {
-      color: $color-correct;
+    &__correct {
+      grid-column: 2 / 4;
+
+      &__number {
+        color: $color-correct;
+      }
     }
 
     &__wrong__number {
       color: $color-wrong;
-    }
-
-    &__time__number {
-      direction: ltr;
-      color: $color-total;
     }
   }
 

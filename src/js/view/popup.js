@@ -197,7 +197,7 @@ export const showScore = score => {
   }
 
   animateScore(DOM.score.score, score.score, 2000);
-  increment(score.score);
+  // increment(score.score);
 
   // max score
   animateScore(DOM.score.max, score.max, 2000);
