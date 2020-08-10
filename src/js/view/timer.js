@@ -1,37 +1,65 @@
 const DOM = {
-  path: document.querySelector('.timer__path-remaining'),
-  label: document.querySelector('.timer__label')
+  ring: document.querySelector('.scoreboard .timer__path-remaining'),
+  label: document.querySelector('.scoreboard .timer__label'),
+  svg: document.querySelector('.scoreboard .timer__svg')
 };
 
-export const formatTime = time => {
+const formatTime = time => {
   const minutes = Math.floor(time / 60);
   const seconds = `${time % 60}`.padStart(2, '0');
 
   return `${minutes}:${seconds}`;
 };
 
-export const setCircleDashArray = (el, remain, total) => {
-  el.setAttribute(
-    'stroke-dasharray',
-    `${(((remain - 1 + remain / total) / total) * 283).toFixed(0)} 283`
-  );
+const resetCircleDashArray = el => {
+  el.ring.style.transitionDelay = '0s';
+  el.ring.style.transitionDuration = '0s';
+  el.ring.setAttribute('stroke-dasharray', '0 283');
 };
 
-export const setRemainingPathColor = (el, timeRemainPercent) => {
+const setCircleDashArray = (el, remain, total, fullOnZero) => {
+  const absRemain = Math.abs(remain);
+  el.ring.setAttribute(
+    'stroke-dasharray',
+    `${(((absRemain - 1 + absRemain / total) / total) * 283).toFixed(0)} 283`
+  );
+
+  if (remain) {
+    el.svg.style.transform = `scaleX(${Math.sign(-remain)})`;
+    el.ring.style.visibility = 'visible';
+  } else if (!fullOnZero) el.ring.style.visibility = 'hidden';
+};
+
+const setRemainingPathColor = (el, timeRemainPercent) => {
   if (timeRemainPercent <= 0.2) {
-    el.classList.remove('timer__color__warn', 'timer__color__remain');
-    el.classList.add('timer__color__alert');
+    el.ring.classList.remove('timer__color__warn', 'timer__color__remain');
+    el.ring.classList.add('timer__color__alert');
   } else if (timeRemainPercent <= 0.4) {
-    el.classList.remove('timer__color__remain', 'timer__color__alert');
-    el.classList.add('timer__color__warn');
+    el.ring.classList.remove('timer__color__remain', 'timer__color__alert');
+    el.ring.classList.add('timer__color__warn');
   } else {
-    el.classList.remove('timer__color__warn', 'timer__color__alert');
-    el.classList.add('timer__color__remain');
+    el.ring.classList.remove('timer__color__warn', 'timer__color__alert');
+    el.ring.classList.add('timer__color__remain');
   }
+};
+
+export const animate = (el, remain, total, fullOnZero) => {
+  // reset
+  resetCircleDashArray(el);
+
+  el.label.innerHTML = remain;
+  setRemainingPathColor(el, remain / total);
+
+  // animate to score
+  setTimeout(() => {
+    el.ring.style.transitionDelay = '0.5s';
+    el.ring.style.transitionDuration = '0.5s';
+    setCircleDashArray(el, remain, total, fullOnZero);
+  }, 10);
 };
 
 export const update = (remain, total) => {
   DOM.label.innerHTML = formatTime(remain);
-  setCircleDashArray(DOM.path, remain, total);
-  setRemainingPathColor(DOM.path, remain / total);
+  setCircleDashArray(DOM, remain, total, true);
+  setRemainingPathColor(DOM, remain / total);
 };
