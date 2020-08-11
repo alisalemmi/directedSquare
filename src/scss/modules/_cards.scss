@@ -20,7 +20,7 @@
     border-radius: $card-padding;
   } @else if $type == popup {
     border-radius: $popup-border-radius;
-    padding: 1.3rem 3rem;
+    padding: $popup-padding-tb $popup-padding-rl;
   }
 }
 

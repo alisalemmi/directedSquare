@@ -23,38 +23,36 @@
 }
 
 .popup {
-  display: flex;
-  flex-direction: column;
-  @include card(popup);
+  display: grid;
+  position: relative;
+  width: 50%;
 
   transition: all 0.5s ease;
+  transform: translateY(calc(-50vh - 50%));
+  overflow: hidden;
 
-  &--main {
-    position: relative;
-    width: 50%;
+  @include respond(tab-port) {
+    width: 70%;
+  }
 
-    @include respond(tab-port) {
-      width: 70%;
-    }
+  @include respond(phone) {
+    width: 100%;
+    height: 100vh;
+  }
 
-    @include respond(phone) {
-      width: 100%;
-      height: 100vh;
-    }
+  &--main,
+  &--back {
+    @include card(popup);
 
-    transform: translateY(calc(-50vh - 50%));
+    display: flex;
+    flex-direction: column;
+    grid-area: 1 / 1 / 2 / 2;
 
-    overflow: hidden;
+    transition: all 0.5s ease;
   }
 
   &--back {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    transform: translateX(-100%);
-    overflow-y: auto;
+    transform: translateX(calc(-100% - #{$popup-padding-rl - $popup-margin-t}));
   }
 
   &--start {
@@ -85,7 +83,9 @@
   &__top {
     display: flex;
     align-items: center;
-    margin-right: -2rem;
+    margin-right: $popup-margin-t;
+
+    background: #fff;
 
     @include respond(phone) {
       margin-bottom: 2rem;
@@ -95,7 +95,7 @@
   &__bottom {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: auto;
   }
 
   &__logo {
@@ -158,8 +158,7 @@
   }
 
   &__text {
-    height: 100%;
-
+    margin: 2rem 0;
     color: #333;
     font-size: 1.6rem;
     font-weight: 100;
@@ -245,6 +244,7 @@
 
   &__help {
     align-self: center;
+    margin-bottom: 2rem;
   }
 }
 
@@ -255,16 +255,3 @@
 
   @include no-drag();
 }
-
-// .time__number {
-//   color: $color-total;
-
-//   display: block;
-//   margin-bottom: -$font-score / 4;
-
-//   @include respond(phone) {
-//     margin: 0;
-//   }
-
-//   font-size: $font-score;
-// }
