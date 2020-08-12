@@ -1,4 +1,5 @@
 import * as Timer from './timer';
+import { default as config } from '../../config.json';
 
 const DOM = {
   checkMenu: document.querySelector('#check__menu'),
@@ -47,7 +48,7 @@ const DOM = {
 const onClose = func => {
   setTimeout(() => {
     func();
-  }, 500);
+  }, config.popupCloseDuration);
 };
 
 /**

@@ -1,1 +1,8 @@
-{}
+{
+  "time": 30,
+  "introDuration": 6000,
+  "introDelay": 1000,
+  "popupCloseDuration": 500,
+  "puzzleItemChangeTime": 300,
+  "puzzleItemSelectAnimation": 500
+}

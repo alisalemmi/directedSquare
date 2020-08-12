@@ -15,13 +15,13 @@ import '../img/sprite.svg';
 import '../audio/correct.wav';
 import '../audio/wrong.wav';
 
+import { default as config } from '../config.json';
+
 import * as UI from './view/UI';
 import * as Item from './model/items';
 import * as TimerUI from './view/timer';
 import * as Timer from './model/timer';
 import * as Popup from './view/popup';
-
-const TIME = 30;
 
 //-----------------------------
 //            click
@@ -43,7 +43,7 @@ const finish = () => {
 //-----------------------------
 Popup.playButtonHandler(() => {
   // show 3 2 1
-  Popup.showRestart(() => Timer.start(TIME));
+  Popup.showRestart(() => Timer.start(config.time));
 
   // reset
   UI.reset();
@@ -71,6 +71,6 @@ document.addEventListener('timeUp', finish);
 //-----------------------------
 setTimeout(() => {
   document.querySelector('#check__menu').checked = true;
-}, 7000);
+}, config.introDuration + config.introDelay);
 
 Popup.helpHandler(Item.getFinish);

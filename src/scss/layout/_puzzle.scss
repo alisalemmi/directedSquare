@@ -16,7 +16,7 @@
     display: block;
     width: 100%;
 
-    transition: all 0.3s ease;
+    transition: all #{$puzzleItemChangeTime}ms ease;
 
     @include no-drag;
 
@@ -46,16 +46,15 @@
 
       &--correct::before {
         background: radial-gradient($color-correct, transparent);
-        // background: $color-correct;
       }
 
       &--wrong::before {
         background: radial-gradient($color-wrong, transparent);
-        // background: $color-wrong;
       }
 
       &--select::before {
-        animation: anim-itemChange 0.5s ease 1 backwards;
+        animation: anim-itemChange #{$puzzleItemSelectAnimation}ms ease 1
+          backwards;
       }
     }
   }

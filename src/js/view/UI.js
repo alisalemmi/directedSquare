@@ -1,3 +1,5 @@
+import { default as config } from '../../config.json';
+
 const DOM = {
   samples: document.querySelector('.sample'),
   puzzle: document.querySelector('.puzzle'),
@@ -73,15 +75,15 @@ export const update = (target, result) => {
   setTimeout(() => {
     target.setAttribute('src', `./img/${result.newItem}.png`);
     target.setAttribute('alt', `Sample${result.newItem}`);
-  }, 300);
+  }, config.puzzleItemChangeTime);
 
   setTimeout(() => {
     target.style.transform = 'scale(1)';
-  }, 320);
+  }, config.puzzleItemChangeTime + 20);
 
   setTimeout(() => {
     target.parentElement.classList.remove('puzzle__item__box--select');
-  }, 500);
+  }, config.puzzleItemSelectAnimation);
 
   DOM.correct.innerHTML = result.correct;
   DOM.wrong.innerHTML = result.wrong;

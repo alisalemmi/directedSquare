@@ -27,7 +27,7 @@
   position: relative;
   width: 50%;
 
-  transition: all 0.5s ease;
+  transition: all #{$popupCloseDuration}ms ease;
   transform: translateY(calc(-50vh - 50%));
   overflow: hidden;
 
@@ -48,7 +48,7 @@
     flex-direction: column;
     grid-area: 1 / 1 / 2 / 2;
 
-    transition: all 0.5s ease;
+    transition: all #{$popupCloseDuration}ms ease;
   }
 
   &--back {
@@ -183,7 +183,7 @@
     justify-items: center;
     row-gap: 2.5rem;
 
-    margin: 2rem 0;
+    margin: 4rem 0;
     height: 100%;
   }
 

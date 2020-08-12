@@ -1,3 +1,5 @@
+import { default as config } from '../../config.json';
+
 const DOM = {
   ring: document.querySelector('.scoreboard .timer__path-remaining'),
   label: document.querySelector('.scoreboard .timer__label'),
@@ -52,7 +54,7 @@ export const animate = (el, remain, total, fullOnZero) => {
 
   // animate to score
   setTimeout(() => {
-    el.ring.style.transitionDelay = '0.5s';
+    el.ring.style.transitionDelay = `${config.popupCloseDuration}ms`;
     el.ring.style.transitionDuration = '0.5s';
     setCircleDashArray(el, remain, total, fullOnZero);
   }, 10);
