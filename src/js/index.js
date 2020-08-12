@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions, import/no-unresolved
 import '../scss/main';
 
 import '../img/1.png';
@@ -17,11 +16,12 @@ import '../audio/wrong.wav';
 
 import { default as config } from '../config.json';
 
-import * as UI from './view/UI';
 import * as Item from './model/items';
-import * as TimerUI from './view/timer';
+import * as connect from './model/connect';
 import * as Timer from './model/timer';
+import * as UI from './view/UI';
 import * as Popup from './view/popup';
+import * as TimerUI from './view/timer';
 
 //-----------------------------
 //            click
