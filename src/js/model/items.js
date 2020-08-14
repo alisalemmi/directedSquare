@@ -1,3 +1,5 @@
+import { default as config } from '../../config.json';
+
 const state = {
   samples: [],
   items: [],
@@ -93,7 +95,8 @@ export const calcScore = () => {
     score,
     correct: state.score.correct,
     wrong: state.score.wrong,
-    max: score // TODO
+    maxScore: Math.max(config.serverInfo.maxScore, score),
+    rankScore: Math.max(config.serverInfo.rankScore, score)
   };
 };
 

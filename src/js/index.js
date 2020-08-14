@@ -36,7 +36,10 @@ const clickHandler = e => {
 
 const finish = () => {
   Item.setFinish(true);
-  Popup.showScore(Item.calcScore());
+
+  const score = Item.calcScore();
+  connect.sendResult(score);
+  Popup.showScore(score);
 };
 //-----------------------------
 //            fill
@@ -62,6 +65,8 @@ Popup.playButtonHandler(() => {
 //-----------------------------
 document.addEventListener('tick', e => {
   TimerUI.update(e.detail.remain, e.detail.total);
+
+  if (e.detail.remain == 3) connect.getInfo();
 });
 
 document.addEventListener('timeUp', finish);

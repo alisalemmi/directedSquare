@@ -122,9 +122,7 @@ export const helpHandler = isFinish => {
 
 /**
  * show popup score
- * @param {Boolean} isTimeUp
- * @param {{score: Number, timeScore:Number, max: Number, correct: Number, wrong: Number}} score
- * @param {{total: Number, time: Number}} time
+ * @param {{score: number, correct: number, wrong: number, maxScore: number, rankScore: number}} score
  */
 export const showScore = score => {
   // title
@@ -136,14 +134,15 @@ export const showScore = score => {
     DOM.score.icon.innerHTML = '<use xlink:href="./img/sprite.svg#close" />';
   }
 
+  const max = Math.max(score.rankScore * 1.2, 2000);
   // score
-  Timer.animate(DOM.score.score, score.score, 2000);
+  Timer.animate(DOM.score.score, score.score, max);
 
   // max score
-  Timer.animate(DOM.score.max, score.max, 2000);
+  Timer.animate(DOM.score.max, score.maxScore, max);
 
   // rank
-  Timer.animate(DOM.score.rank, score.max, 2000);
+  Timer.animate(DOM.score.rank, score.rankScore, max);
 
   //correct
   DOM.score.correct.innerHTML = score.correct;
