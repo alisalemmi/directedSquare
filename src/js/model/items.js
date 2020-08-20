@@ -89,14 +89,10 @@ const getScore = () =>
  * calculate final score and return it.
  */
 export const calcScore = () => {
-  const score = getScore();
-
   return {
-    score,
+    score: getScore(),
     correct: state.score.correct,
-    wrong: state.score.wrong,
-    maxScore: Math.max(config.serverInfo.maxScore, score),
-    rankScore: Math.max(config.serverInfo.rankScore, score)
+    wrong: state.score.wrong
   };
 };
 

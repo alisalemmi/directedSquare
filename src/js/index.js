@@ -8,7 +8,7 @@ import '../img/5.png';
 import '../img/6.png';
 import '../img/7.png';
 import '../img/8.png';
-import '../img/logo2.png';
+import '../img/logo2-min.png';
 import '../img/sprite.svg';
 
 import '../audio/correct.wav';
@@ -34,11 +34,11 @@ const clickHandler = e => {
   if (result) UI.update(e.target, result);
 };
 
-const finish = () => {
+const finish = async () => {
   Item.setFinish(true);
 
   const score = Item.calcScore();
-  connect.sendResult(score);
+  await connect.sendResult(score);
   Popup.showScore(score);
 };
 //-----------------------------
@@ -66,7 +66,7 @@ Popup.playButtonHandler(() => {
 document.addEventListener('tick', e => {
   TimerUI.update(e.detail.remain, e.detail.total);
 
-  if (e.detail.remain == 3) connect.getInfo();
+  // if (e.detail.remain == 3) connect.getInfo();
 });
 
 document.addEventListener('timeUp', finish);

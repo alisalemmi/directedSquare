@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>مربع های جهت دار</title>
-    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="./img/logo-min.png" type="image/x-icon" />
   </head>
   <body>
     <div class="container">
@@ -273,14 +273,15 @@
         <input type="checkbox" name="popup" id="check__rank" />
         <div class="popup--back" id="popup__rank">
           <div class="popup__top">
-            <div class="popup__icon"></div>
-            <h2 class="popup__title">مربع های جهت دار</h2>
+            <svg class="popup__icon">
+              <use xlink:href="./img/sprite.svg#trophy" />
+            </svg>
+            <h2 class="popup__title">جدول امتیازات</h2>
             <label class="popup__close" for="check__score"></label>
           </div>
-          <p class="popup__text">
-            سه تا علامت توی سمت چپ تصویر براتون نمایش داده میشه. اون شکل‌ها رو
-            از بین علامت‌های دیگه پیدا کنید...
-          </p>
+
+          <ul class="popup__rank__table"></ul>
+
           <div class="popup__bottom">
             <label class="button popup__play" for="check__score">
               <svg class="button__icon">
@@ -302,7 +303,7 @@
     <div class="popup-logo">
       <img
         class="logo"
-        src="./img/logo2.png"
+        src="./img/logo2-min.png"
         alt="موسسه هدایت فراگیر استعداد های برتر"
       />
     </div>

@@ -1,8 +1,15 @@
 {
+  "minRankScore": 1000,
   "time": 30,
   "introDuration": 6000,
   "introDelay": 1000,
   "popupCloseDuration": 500,
   "puzzleItemChangeTime": 300,
-  "puzzleItemSelectAnimation": 500
+  "puzzleItemSelectAnimation": 500,
+  "name": "name",
+  "username": "username",
+  "myRank": 0,
+  "maxScore": 0,
+  "rankScore": 0,
+  "tops": []
 }

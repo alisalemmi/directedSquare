@@ -7,6 +7,7 @@ const DOM = {
   checkHow: document.querySelector('#check__how'),
   checkRank: document.querySelector('#check__rank'),
   backdrop: document.querySelectorAll('.popup__backdrop'),
+  rankTable: document.querySelector('.popup__rank__table'),
   close: document.querySelectorAll('.popup__close'),
   buttonsPlay: {
     label: document.querySelectorAll('.popup__play > .button__label'),
@@ -134,21 +135,58 @@ export const showScore = score => {
     DOM.score.icon.innerHTML = '<use xlink:href="./img/sprite.svg#close" />';
   }
 
-  const max = Math.max(score.rankScore * 1.2, 2000);
+  const max = Math.max(config.rankScore * 1.2, config.minRankScore);
   // score
   Timer.animate(DOM.score.score, score.score, max);
 
   // max score
-  Timer.animate(DOM.score.max, score.maxScore, max);
+  Timer.animate(DOM.score.max, config.maxScore, max);
 
   // rank
-  Timer.animate(DOM.score.rank, score.rankScore, max);
+  Timer.animate(DOM.score.rank, config.rankScore, max);
 
   //correct
   DOM.score.correct.innerHTML = score.correct;
 
   // wrong
   DOM.score.wrong.innerHTML = score.wrong;
+
+  // ranking
+  DOM.rankTable.innerHTML =
+    '<li class="popup__rank__table__header"><span class="popup__rank__table__rank">رتبه</span><span class="popup__rank__table__name">نام</span><span class="popup__rank__table__score">امتیاز</span></li>';
+
+  for (const t of config.tops) {
+    DOM.rankTable.innerHTML += `<li>
+              <span class="popup__rank__table__rank">${t.rank}</span>
+              <span class="popup__rank__table__name">${t.name}</span>
+              <span class="popup__rank__table__score">${t.score}</span>
+            </li>`;
+  }
+
+  let find = false;
+  for (const t of config.tops) {
+    if (
+      t.rank == config.myRank &&
+      t.name == config.name &&
+      t.score == config.maxScore
+    ) {
+      find = true;
+      break;
+    }
+  }
+
+  if (!find) {
+    DOM.rankTable.innerHTML += `<li>
+              <span class="popup__rank__table__rank">&vellip;</span>
+              <span class="popup__rank__table__name" style="margin-right: 4rem;">&vellip;</span>
+              <span class="popup__rank__table__score">&vellip;</span>
+            </li>
+            <li>
+              <span class="popup__rank__table__rank">${config.myRank}</span>
+              <span class="popup__rank__table__name">${config.name}</span>
+              <span class="popup__rank__table__score">${config.maxScore}</span>
+            </li>`;
+  }
 
   DOM.checkMenu.checked = false;
   DOM.checkScore.checked = true;
