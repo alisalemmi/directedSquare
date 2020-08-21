@@ -1,0 +1,51 @@
+extends ../module/popup
+
+block var
+  - var front_id = "score";
+  - var back_id = "rank";
+
+  - var front_title = "کارِت خوب بود";
+  - var back_title = "جدول امتیازات";
+
+  - var front_btnPrimary_icon = "play-button";
+  - var front_btnPrimary_label = "شروع";
+  - var front_btnSecondary_icon = "star";
+  - var front_btnSecondary_label = "نمایش رتبه";
+
+  - var back_btnPrimary_icon = "play-button";
+  - var back_btnPrimary_label = "شروع";
+  - var back_btnSecondary_icon = "back";
+  - var back_btnSecondary_label = "بازگشت";
+
+block front-body
+  .popup__body
+    .popup__score__item.popup__score__max
+      +timer
+      h3 بیش ترین امتیاز
+
+    .popup__score__item.popup__score__score
+      +timer
+      h3 امتیاز
+
+    .popup__score__item.popup__score__rank
+      +timer
+      h3 امتیاز نفر اول
+
+    .popup__score__item.popup__score__correct
+      span.popup__score__correct__number 0
+      h3 درست
+
+    .popup__score__item.popup__score__wrong 
+      span.popup__score__wrong__number 0
+      h3 نادرست
+
+block back-body
+  include ../module/table
+
+block front-logo
+  svg.popup__icon
+    use(xlink:href='../img/sprite.svg#check')
+
+block back-logo
+  svg.popup__icon
+    use(xlink:href='../img/sprite.svg#trophy')
