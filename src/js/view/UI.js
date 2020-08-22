@@ -1,4 +1,4 @@
-import { default as config } from '../../config.json';
+import config from '../../config.json';
 
 const DOM = {
   samples: document.querySelector('.sample'),

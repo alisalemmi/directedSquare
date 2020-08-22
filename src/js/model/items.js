@@ -1,5 +1,3 @@
-import { default as config } from '../../config.json';
-
 const state = {
   samples: [],
   items: [],
@@ -54,11 +52,11 @@ const getRandomItem = (old = 10) => {
   // make sure that there is at least 3 correct item in puzzle
   if (state.total - state.score.correct < 3) {
     newItem = state.samples[state.total % 3];
-    if (newItem == old) newItem = state.samples[(state.total + 1) % 3];
+    if (newItem === old) newItem = state.samples[(state.total + 1) % 3];
   }
   // select new item that is not old item
   else {
-    newItem = Math.floor(Math.random() * (7 + (old == 10)) + 1);
+    newItem = Math.floor(Math.random() * (7 + (old === 10)) + 1);
     if (newItem >= old) newItem++;
   }
 

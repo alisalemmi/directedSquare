@@ -1,4 +1,15 @@
-.popup__score {
+.result {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(4rem, 5rem));
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  row-gap: 2.5rem;
+
+  margin: 4rem 0;
+  height: 100%;
+
   &__item {
     display: flex;
     flex-direction: column;

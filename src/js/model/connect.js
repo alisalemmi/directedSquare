@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { default as config } from '../../config.json';
+import config from '../../config.json';
 
 const init = async () => {
   const url = new URLSearchParams(window.location.search);
@@ -11,15 +11,6 @@ const init = async () => {
 };
 
 init();
-
-export const getInfo = async () => {
-  const res = await Axios.get('/api/rank/directedSquare');
-
-  config.rankScore = res.data.tops[0].score;
-  config.tops = res.data.tops;
-
-  return res.data;
-};
 
 /**
  * send result to server

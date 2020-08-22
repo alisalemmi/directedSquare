@@ -1,5 +1,5 @@
-import * as Timer from './timer';
-import { default as config } from '../../config.json';
+import * as resultMonitor from './resultMonitor';
+import config from '../../config.json';
 
 const DOM = {
   checkMenu: document.querySelector('#check__menu'),
@@ -7,39 +7,37 @@ const DOM = {
   checkHow: document.querySelector('#check__how'),
   checkRank: document.querySelector('#check__rank'),
   backdrop: document.querySelectorAll('.popup__backdrop'),
-  rankTable: document.querySelector('.popup__rank__table'),
+  rankTable: document.querySelector('.table'),
   close: document.querySelectorAll('.popup__close'),
   buttonsPlay: {
-    label: document.querySelectorAll('.popup__play > .button__label'),
-    icon: document.querySelectorAll('.popup__play > .button__icon'),
-    buttons: document.querySelectorAll('.popup__play')
+    label: document.querySelectorAll('.button__play > .button__label'),
+    icon: document.querySelectorAll('.button__play > .button__icon'),
+    buttons: document.querySelectorAll('.button__play')
   },
-  score: {
+  result: {
     icon: document.querySelector('#popup__score .popup__icon'),
     title: document.querySelector('#popup__score .popup__title'),
     score: {
-      label: document.querySelector('.popup__score__score .timer__label'),
-      svg: document.querySelector('.popup__score__score .timer__svg'),
-      ring: document.querySelector(
-        '.popup__score__score .timer__path-remaining'
-      )
+      label: document.querySelector('.result__score .timer__label'),
+      svg: document.querySelector('.result__score .timer__svg'),
+      ring: document.querySelector('.result__score .timer__path-remaining')
     },
     max: {
-      label: document.querySelector('.popup__score__max .timer__label'),
-      svg: document.querySelector('.popup__score__max .timer__svg'),
-      ring: document.querySelector('.popup__score__max .timer__path-remaining')
+      label: document.querySelector('.result__max .timer__label'),
+      svg: document.querySelector('.result__max .timer__svg'),
+      ring: document.querySelector('.result__max .timer__path-remaining')
     },
     rank: {
-      label: document.querySelector('.popup__score__rank .timer__label'),
-      svg: document.querySelector('.popup__score__rank .timer__svg'),
-      ring: document.querySelector('.popup__score__rank .timer__path-remaining')
+      label: document.querySelector('.result__rank .timer__label'),
+      svg: document.querySelector('.result__rank .timer__svg'),
+      ring: document.querySelector('.result__rank .timer__path-remaining')
     },
-    correct: document.querySelector('.popup__score__correct__number'),
-    wrong: document.querySelector('.popup__score__wrong__number')
+    correct: document.querySelector('.result__correct__number'),
+    wrong: document.querySelector('.result__wrong__number')
   },
   container: document.querySelector('.container'),
-  popupStart: document.querySelector('.popup--start'),
-  restartTimer: document.querySelector('.timer-restart')
+  restartTimer: document.querySelector('.restart-timer'),
+  restartTimerLabel: document.querySelector('.restart-timer__number')
 };
 
 /**
@@ -64,10 +62,13 @@ const goToHome = () => {
  * when start, change start to restart
  */
 const turnPlayToReset = () => {
-  DOM.buttonsPlay.label.forEach(el => (el.innerHTML = 'شروع مجدد'));
-  DOM.buttonsPlay.icon.forEach(
-    el => (el.innerHTML = '<use xlink:href="./img/sprite.svg#refresh" />')
-  );
+  DOM.buttonsPlay.label.forEach(el => {
+    el.innerHTML = 'شروع مجدد';
+  });
+
+  DOM.buttonsPlay.icon.forEach(el => {
+    el.innerHTML = '<use xlink:href="./img/sprite.svg#refresh" />';
+  });
 };
 
 /**
@@ -128,47 +129,47 @@ export const helpHandler = isFinish => {
 export const showScore = score => {
   // title
   if (score.wrong < score.correct / 2) {
-    DOM.score.title.innerHTML = 'کارِت خوب بود';
-    DOM.score.icon.innerHTML = '<use xlink:href="./img/sprite.svg#check" />';
+    DOM.result.title.innerHTML = 'کارِت خوب بود';
+    DOM.result.icon.innerHTML = '<use xlink:href="./img/sprite.svg#check" />';
   } else {
-    DOM.score.title.innerHTML = 'بیشتر تلاش کن';
-    DOM.score.icon.innerHTML = '<use xlink:href="./img/sprite.svg#close" />';
+    DOM.result.title.innerHTML = 'بیشتر تلاش کن';
+    DOM.result.icon.innerHTML = '<use xlink:href="./img/sprite.svg#close" />';
   }
 
   const max = Math.max(config.rankScore * 1.2, config.minRankScore);
   // score
-  Timer.animate(DOM.score.score, score.score, max);
+  resultMonitor.animate(DOM.result.score, score.score, max);
 
   // max score
-  Timer.animate(DOM.score.max, config.maxScore, max);
+  resultMonitor.animate(DOM.result.max, config.maxScore, max);
 
   // rank
-  Timer.animate(DOM.score.rank, config.rankScore, max);
+  resultMonitor.animate(DOM.result.rank, config.rankScore, max);
 
-  //correct
-  DOM.score.correct.innerHTML = score.correct;
+  // correct
+  DOM.result.correct.innerHTML = score.correct;
 
   // wrong
-  DOM.score.wrong.innerHTML = score.wrong;
+  DOM.result.wrong.innerHTML = score.wrong;
 
   // ranking
   DOM.rankTable.innerHTML =
-    '<li class="popup__rank__table__header"><span class="popup__rank__table__rank">رتبه</span><span class="popup__rank__table__name">نام</span><span class="popup__rank__table__score">امتیاز</span></li>';
+    '<li class="table__header"><span class="table__rank">رتبه</span><span class="table__name">نام</span><span class="table__score">امتیاز</span></li>';
 
   for (const t of config.tops) {
     DOM.rankTable.innerHTML += `<li>
-              <span class="popup__rank__table__rank">${t.rank}</span>
-              <span class="popup__rank__table__name">${t.name}</span>
-              <span class="popup__rank__table__score">${t.score}</span>
+              <span class="table__rank">${t.rank}</span>
+              <span class="table__name">${t.name}</span>
+              <span class="table__score">${t.score}</span>
             </li>`;
   }
 
   let find = false;
   for (const t of config.tops) {
     if (
-      t.rank == config.myRank &&
-      t.name == config.name &&
-      t.score == config.maxScore
+      t.rank === config.myRank &&
+      t.name === config.name &&
+      t.score === config.maxScore
     ) {
       find = true;
       break;
@@ -177,14 +178,14 @@ export const showScore = score => {
 
   if (!find) {
     DOM.rankTable.innerHTML += `<li>
-              <span class="popup__rank__table__rank">&vellip;</span>
-              <span class="popup__rank__table__name" style="margin-right: 4rem;">&vellip;</span>
-              <span class="popup__rank__table__score">&vellip;</span>
+              <span class="table__rank">&vellip;</span>
+              <span class="table__name" style="margin-right: 4rem;">&vellip;</span>
+              <span class="table__score">&vellip;</span>
             </li>
             <li>
-              <span class="popup__rank__table__rank">${config.myRank}</span>
-              <span class="popup__rank__table__name">${config.name}</span>
-              <span class="popup__rank__table__score">${config.maxScore}</span>
+              <span class="table__rank">${config.myRank}</span>
+              <span class="table__name">${config.name}</span>
+              <span class="table__score">${config.maxScore}</span>
             </li>`;
   }
 
@@ -193,18 +194,21 @@ export const showScore = score => {
 };
 
 export const showRestart = calback => {
-  DOM.popupStart.classList.add('popup--start--show');
-  DOM.container.style.opacity = 0;
+  onClose(() => {
+    DOM.restartTimer.classList.add('restart-timer--show');
+    DOM.container.style.opacity = 0;
+  });
 
   let t = 4;
   const inter = setInterval(() => {
-    if (t == 4) DOM.restartTimer.innerHTML = '3';
-    else if (t > 1) DOM.restartTimer.innerHTML = t - 1;
-    else if (t == 1) {
-      DOM.restartTimer.innerHTML = '';
+    if (t === 4) DOM.restartTimerLabel.innerHTML = '3';
+    else if (t > 1) DOM.restartTimerLabel.innerHTML = t - 1;
+    else if (t === 1) {
+      DOM.restartTimerLabel.innerHTML = '';
       DOM.container.style.opacity = 1;
-    } else if (t == 0) {
-      DOM.popupStart.classList.remove('popup--start--show');
+    } else if (t === 0) {
+      DOM.restartTimer.classList.remove('restart-timer--show');
+
       calback();
       clearInterval(inter);
     }

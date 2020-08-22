@@ -1,4 +1,4 @@
-import '../scss/main';
+import '../scss/main.scss';
 
 import '../img/1.png';
 import '../img/2.png';
@@ -14,7 +14,7 @@ import '../img/sprite.svg';
 import '../audio/correct.wav';
 import '../audio/wrong.wav';
 
-import { default as config } from '../config.json';
+import config from '../config.json';
 
 import * as Item from './model/items';
 import * as connect from './model/connect';
@@ -65,8 +65,6 @@ Popup.playButtonHandler(() => {
 //-----------------------------
 document.addEventListener('tick', e => {
   TimerUI.update(e.detail.remain, e.detail.total);
-
-  // if (e.detail.remain == 3) connect.getInfo();
 });
 
 document.addEventListener('timeUp', finish);
@@ -74,8 +72,10 @@ document.addEventListener('timeUp', finish);
 //-----------------------------
 //            other
 //-----------------------------
-setTimeout(() => {
-  document.querySelector('#check__menu').checked = true;
-}, config.introDuration + config.introDelay);
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelector('#check__menu').checked = true;
+  }, config.introDuration + config.introDelay);
+});
 
 Popup.helpHandler(Item.getFinish);
