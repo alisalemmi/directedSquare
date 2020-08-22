@@ -1,25 +1,25 @@
-ul.popup__rank__table
+ul.table
 //- 
   //- header 
-  li.popup__rank__table__header
-    span.popup__rank__table__rank رتبه
-    span.popup__rank__table__name نام
-    span.popup__rank__table__score امتیاز
+  li.table__header
+    span.table__rank رتبه
+    span.table__name نام
+    span.table__score امتیاز
 
   //- rows
   li
-    span.popup__rank__table__rank ${t.rank}
-    span.popup__rank__table__name ${t.name}
-    span.popup__rank__table__score ${t.score}
+    span.table__rank ${t.rank}
+    span.table__name ${t.name}
+    span.table__score ${t.score}
 
   //- ...
   li
-    span.popup__rank__table__rank &vellip;
-    span.popup__rank__table__name(style={ "margin-right": "4rem" }) &vellip;
-    span.popup__rank__table__score &vellip;
+    span.table__rank &vellip;
+    span.table__name(style={ "margin-right": "4rem" }) &vellip;
+    span.table__score &vellip;
 
   //- last row after ...
   li
-    span.popup__rank__table__rank ${config.myRank}
-    span.popup__rank__table__name ${config.name}
-    span.popup__rank__table__score ${config.maxScore}
+    span.table__rank ${config.myRank}
+    span.table__name ${config.name}
+    span.table__score ${config.maxScore}

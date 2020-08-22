@@ -1,6 +1,6 @@
 block var
 
-input(type='checkbox', id=`check__${front_id}`)
+input.check--front(type='checkbox', id=`check__${front_id}`)
 .popup__backdrop
   .popup
     //- front
@@ -29,7 +29,7 @@ input(type='checkbox', id=`check__${front_id}`)
           .button__label= front_btnSecondary_label
 
     //- back
-    input(type='checkbox', id=`check__${back_id}`)
+    input.check--back(type='checkbox', id=`check__${back_id}`)
     .popup--back
       //- top
       .popup__top

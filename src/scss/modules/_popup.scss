@@ -1,21 +1,20 @@
-#check {
-  &__menu,
-  &__score {
+.check {
+  &--front {
     display: none;
 
     &:checked + .popup__backdrop {
       visibility: visible;
       backdrop-filter: blur(5px) brightness(60%);
 
-      & > * {
+      & > .popup {
         transform: translate(0);
       }
     }
   }
 
-  &__how,
-  &__rank {
+  &--back {
     display: none;
+
     &:checked + .popup--back {
       transform: translateX(0);
     }
@@ -41,7 +40,7 @@
     height: 100%;
   }
 
-  &--main,
+  &--front,
   &--back {
     @include card(popup);
 
@@ -54,15 +53,6 @@
 
   &--back {
     transform: translateX(calc(-100% - #{$popup-padding-rl - $popup-margin-t}));
-  }
-
-  &--start {
-    backdrop-filter: blur(5px) brightness(60%);
-
-    &--show {
-      visibility: visible !important;
-      animation: anim-backdrop 4.5s ease both;
-    }
   }
 
   &__backdrop {
@@ -188,107 +178,8 @@
     height: 100%;
   }
 
-  &__score {
-    &__item {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      grid-column: span 2;
-    }
-
-    &__score > .timer {
-      transform: scale(1.25) translateY(-10%);
-    }
-
-    &__game-score {
-      font-size: 115%;
-    }
-
-    &__correct,
-    &__wrong {
-      text-align: center;
-
-      @include respond(phone) {
-        width: 7rem;
-      }
-
-      &__number {
-        display: block;
-        margin-bottom: -$font-score / 4;
-
-        @include respond(phone) {
-          margin: 0;
-        }
-
-        font-size: $font-score;
-      }
-
-      h3 {
-        margin: 0;
-        font-size: $font-score / 2;
-      }
-    }
-
-    &__correct {
-      grid-column: 2 / 4;
-
-      &__number {
-        color: $color-correct;
-      }
-    }
-
-    &__wrong__number {
-      color: $color-wrong;
-    }
-  }
-
   &__help {
     align-self: center;
     margin-bottom: 2rem;
   }
-
-  &__rank__table {
-    font-size: 1.3rem;
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0;
-
-    li {
-      display: flex;
-      padding: 0.5rem 0;
-      background-color: #fafafa;
-
-      &:nth-child(even) {
-        background-color: #eee;
-      }
-    }
-
-    &__header {
-      color: #fff;
-      background-color: $color-correct !important;
-      font-weight: 700;
-    }
-
-    &__rank,
-    &__score {
-      flex: 0 0 4rem;
-      text-align: center;
-    }
-
-    &__name {
-      margin: {
-        right: 1rem;
-        left: auto;
-      }
-    }
-  }
-}
-
-.timer-restart {
-  font-size: 9rem;
-  font-weight: 100;
-  color: #fff;
-
-  @include no-drag();
 }
