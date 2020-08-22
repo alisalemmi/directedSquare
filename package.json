@@ -1,5 +1,5 @@
 {
-  "name": "simple-game",
+  "name": "directe-square",
   "version": "1.0.0",
   "description": "second project on ponisha",
   "main": "index.js",
@@ -46,7 +46,9 @@
     "css-loader": "^4.2.0",
     "eslint": "^7.6.0",
     "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "file-loader": "^6.0.0",
     "html-loader": "^1.2.1",
     "html-webpack-plugin": "^4.3.0",
